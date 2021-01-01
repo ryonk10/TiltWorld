@@ -3,47 +3,40 @@ using UnityEngine;
 
 public class stageController : MonoBehaviour
 {
-    public float speed;
+   
     public GameObject stage;
+    public CharaController charaController;
+    public float speed;
     public int size;
-    public ButtonController buttonController;
-    public GameObject button;
-    public bool hit = false;
+    public int charaExitBlock { get; set; }
+    public bool charahitToWall { get; set; } = false;
 
-    private bool blockMoveFlag = false;
     private GameObject[] gameBlockPosition;
+    private Vector3[,] baseBlockPosition;
     private Vector3[] destination;
     private int direction;
     private int[,] isBlockExit;
-    private Vector3[,] baseBlockPosition;
+    private bool blockMoveFlag = false;
 
     // Start is called before the first frame update
     private void Start()
     {
-        //baseBlockの配置読み込み
-        var baseblocks = GameObject.FindGameObjectsWithTag("BlockPosition");
+        //baseBlockの配置読み込み,isBlockExitを-1で初期化
         baseBlockPosition = new Vector3[size, size];
-        for (var i = 0; i < size * size; i++)
+        isBlockExit = new int[size, size];
+        for (var vertical=0;vertical<size;vertical++)
         {
-            var index = baseblocks[i].name.Split(',').Select(x => int.Parse(x)).ToArray();
-            baseBlockPosition[index[0], index[1]] = baseblocks[i].transform.localPosition;
+            for (var horizon = 0; horizon < size; horizon++)
+            {
+                baseBlockPosition[vertical, horizon] = new Vector3(horizon, 0, vertical);
+                isBlockExit[vertical, horizon] = -1;
+            }
         }
         //
         //blockの配置読み込み
         //
         gameBlockPosition = new GameObject[size * size];
         destination = new Vector3[size * size];
-        //
-        //isBlockExitを-1で初期化
-        //
-        isBlockExit = new int[size, size];
-        for (var i = 0; i < size; i++)
-        {
-            for (var n = 0; n < size; n++)
-            {
-                isBlockExit[i, n] = -1;
-            }
-        }
         var blocks = GameObject.FindGameObjectsWithTag("block");
         for (var i = 0; i < blocks.Length; i++)
         {
@@ -71,32 +64,33 @@ public class stageController : MonoBehaviour
             //
             //ステージを戻す
             //
-            if (DoseStop() && hit)
+            if (DoseStop()&&charahitToWall)
             {
                 blockMoveFlag = false;
+                charahitToWall = false;
                 if (direction == 0)
                 {
                     iTween.RotateTo(stage, iTween.Hash("x", 0f,
-                        "oncompletetarget", button,
-                "oncomplete", "ChangeInteractableToTrue"));
+                        "oncompletetarget", stage,
+                "oncomplete", "MoveCharaToDefaltPosition"));
                 }
                 else if (direction == 1)
                 {
                     iTween.RotateTo(stage, iTween.Hash("x", 0f,
-                        "oncompletetarget", button,
-                "oncomplete", "ChangeInteractableToTrue"));
+                        "oncompletetarget", stage,
+                "oncomplete", "MoveCharaToDefaltPosition"));
                 }
                 else if (direction == 2)
                 {
                     iTween.RotateTo(stage, iTween.Hash("z", 0f,
-                        "oncompletetarget", button,
-                "oncomplete", "ChangeInteractableToTrue"));
+                        "oncompletetarget", stage,
+                "oncomplete", "MoveCharaToDefaltPosition"));
                 }
                 else if (direction == 3)
                 {
                     iTween.RotateTo(stage, iTween.Hash("z", 0f,
-                        "oncompletetarget", button,
-                "oncomplete", "ChangeInteractableToTrue"));
+                        "oncompletetarget", stage,
+                "oncomplete", "MoveCharaToDefaltPosition"));
                 }
             }
         }
@@ -249,6 +243,12 @@ public class stageController : MonoBehaviour
     private void SetBlockMoveFlag()
     {
         blockMoveFlag = true;
+    }
+
+    private void MoveCharaToDefaltPosition()
+    {
+        charaController.charaExitBlockPosition = gameBlockPosition[charaExitBlock].transform.position;
+        charaController.doseStageReturn = true;
     }
 
     private bool DoseStop()
