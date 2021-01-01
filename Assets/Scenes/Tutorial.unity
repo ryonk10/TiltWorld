@@ -265,7 +265,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 398252932}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: -1}
+  m_LocalPosition: {x: -1, y: 0.5, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2061502583}
@@ -284,7 +284,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100076, guid: 69c3ed15e9d13481e8f7dc4db5532fb6, type: 3}
       propertyPath: m_Name
-      value: unitychan_dynamic_locomotion
+      value: chara
       objectReference: {fileID: 0}
     - target: {fileID: 100076, guid: 69c3ed15e9d13481e8f7dc4db5532fb6, type: 3}
       propertyPath: m_IsActive
@@ -473,6 +473,7 @@ GameObject:
   - component: {fileID: 499725639}
   - component: {fileID: 499725641}
   - component: {fileID: 499725640}
+  - component: {fileID: 499725642}
   m_Layer: 0
   m_Name: Quad (3)
   m_TagString: Untagged
@@ -489,7 +490,7 @@ Transform:
   m_GameObject: {fileID: 499725638}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 1, y: 0.5, z: -0.5}
-  m_LocalScale: {x: 3, y: 2, z: 1}
+  m_LocalScale: {x: 3, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 398252933}
   m_RootOrder: 3
@@ -516,6 +517,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 499725638}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &499725642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499725638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b34f286bb64a1884ab06c9760c9f5afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageCon: {fileID: 1261130150}
 --- !u!1 &600676120
 GameObject:
   m_ObjectHideFlags: 0
@@ -1793,7 +1807,7 @@ MonoBehaviour:
   size: 3
   buttonController: {fileID: 1321484575}
   button: {fileID: 1321484574}
-  charaController: {fileID: 1922578634}
+  hit: 0
 --- !u!4 &1261130151
 Transform:
   m_ObjectHideFlags: 0
@@ -2706,6 +2720,7 @@ GameObject:
   - component: {fileID: 2007526947}
   - component: {fileID: 2007526949}
   - component: {fileID: 2007526948}
+  - component: {fileID: 2007526950}
   m_Layer: 0
   m_Name: Quad (2)
   m_TagString: Untagged
@@ -2722,7 +2737,7 @@ Transform:
   m_GameObject: {fileID: 2007526946}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: 0.5, z: 2.5}
-  m_LocalScale: {x: 3, y: 2, z: 1}
+  m_LocalScale: {x: 3, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 398252933}
   m_RootOrder: 2
@@ -2749,6 +2764,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2007526946}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2007526950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007526946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b34f286bb64a1884ab06c9760c9f5afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageCon: {fileID: 1261130150}
 --- !u!1 &2056975388
 GameObject:
   m_ObjectHideFlags: 0
@@ -2760,6 +2788,7 @@ GameObject:
   - component: {fileID: 2056975389}
   - component: {fileID: 2056975391}
   - component: {fileID: 2056975390}
+  - component: {fileID: 2056975392}
   m_Layer: 0
   m_Name: Quad (1)
   m_TagString: Untagged
@@ -2776,7 +2805,7 @@ Transform:
   m_GameObject: {fileID: 2056975388}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 2.5, y: 0.5, z: 1}
-  m_LocalScale: {x: 3, y: 2, z: 1}
+  m_LocalScale: {x: 3, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 398252933}
   m_RootOrder: 1
@@ -2803,6 +2832,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056975388}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2056975392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056975388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b34f286bb64a1884ab06c9760c9f5afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageCon: {fileID: 1261130150}
 --- !u!1 &2061502582
 GameObject:
   m_ObjectHideFlags: 0
@@ -2814,6 +2856,7 @@ GameObject:
   - component: {fileID: 2061502583}
   - component: {fileID: 2061502585}
   - component: {fileID: 2061502584}
+  - component: {fileID: 2061502586}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -2830,7 +2873,7 @@ Transform:
   m_GameObject: {fileID: 2061502582}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.5, y: 0.5, z: 1}
-  m_LocalScale: {x: 3, y: 2, z: 1}
+  m_LocalScale: {x: 3, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 398252933}
   m_RootOrder: 0
@@ -2857,6 +2900,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061502582}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2061502586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061502582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b34f286bb64a1884ab06c9760c9f5afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageCon: {fileID: 1261130150}
 --- !u!1 &2101228952
 GameObject:
   m_ObjectHideFlags: 0

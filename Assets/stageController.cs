@@ -8,6 +8,7 @@ public class stageController : MonoBehaviour
     public int size;
     public ButtonController buttonController;
     public GameObject button;
+    public bool hit = false;
 
     private bool blockMoveFlag = false;
     private GameObject[] gameBlockPosition;
@@ -70,7 +71,7 @@ public class stageController : MonoBehaviour
             //
             //ステージを戻す
             //
-            if (DoseStop())
+            if (DoseStop() && hit)
             {
                 blockMoveFlag = false;
                 if (direction == 0)
