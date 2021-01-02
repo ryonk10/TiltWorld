@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitWall : MonoBehaviour
+public class HitWallOut : MonoBehaviour
 {
     public stageController stageCon;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -22,6 +22,7 @@ public class HitWall : MonoBehaviour
     {
         if (collision.gameObject.name == "chara")
         {
+            stageCon.isCharaHitToIn = false;
             stageCon.charahitToWall = true;
         }
     }

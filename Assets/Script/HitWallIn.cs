@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnterBlock : MonoBehaviour
+public class HitWallIn : MonoBehaviour
 {
     public stageController stageCon;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -21,7 +22,8 @@ public class EnterBlock : MonoBehaviour
     {
         if (collision.gameObject.name == "chara")
         {
-            stageCon.charaExitBlock = int.Parse(this.name);
+            stageCon.isCharaHitToIn = true;
+            stageCon.charahitToWall = true;
         }
     }
 }

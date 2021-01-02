@@ -20,10 +20,11 @@ public class CharaController : MonoBehaviour
         if (doseStageReturn)
         {
             float step = walkSpeed * Time.deltaTime;
-            charaDefaltPosition = new Vector3(charaExitBlockPosition.x, this.transform.position.y, charaExitBlockPosition.z);
-            this.transform.position = Vector3.MoveTowards(this.transform.position, charaDefaltPosition, step);
-            if ((charaDefaltPosition.x - 0.1 < this.transform.position.x) && (this.transform.position.x < charaDefaltPosition.x + 0.1) &&
-                (charaDefaltPosition.z - 0.1 < this.transform.position.z) && (this.transform.position.z < charaDefaltPosition.z + 0.1))
+            charaDefaltPosition = new Vector3(charaExitBlockPosition.x, 0.5f, charaExitBlockPosition.z);
+            this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, charaDefaltPosition, step);
+            if ((charaDefaltPosition.x - 0.1 < this.transform.localPosition.x) && (this.transform.localPosition.x < charaDefaltPosition.x + 0.1) &&
+                (charaDefaltPosition.z - 0.1 < this.transform.localPosition.z) && (this.transform.localPosition
+                .z < charaDefaltPosition.z + 0.1))
             {
                 doseStageReturn = false;
                 buttonController.ChangeInteractableToTrue();

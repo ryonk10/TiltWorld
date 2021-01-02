@@ -8,8 +8,10 @@ public class stageController : MonoBehaviour
     public CharaController charaController;
     public float speed;
     public int size;
+    public int charaEnterBlock { get; set; }
     public int charaExitBlock { get; set; }
     public bool charahitToWall { get; set; } = false;
+    public bool isCharaHitToIn { get; set; } = true;
 
     private GameObject[] gameBlockPosition;
     private Vector3[,] baseBlockPosition;
@@ -247,8 +249,15 @@ public class stageController : MonoBehaviour
 
     private void MoveCharaToDefaltPosition()
     {
-        charaController.charaExitBlockPosition = gameBlockPosition[charaExitBlock].transform.position;
-        charaController.doseStageReturn = true;
+        if (isCharaHitToIn)
+        {
+            charaController.charaExitBlockPosition = gameBlockPosition[charaEnterBlock].transform.localPosition;
+        }
+        else
+        {
+            charaController.charaExitBlockPosition = gameBlockPosition[charaExitBlock].transform.localPosition;
+        }
+            charaController.doseStageReturn = true;
     }
 
     private bool DoseStop()
