@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class stageController : MonoBehaviour
 {
@@ -10,19 +11,22 @@ public class stageController : MonoBehaviour
     public int size;
     public int charaEnterBlock { get; set; }
     public int charaExitBlock { get; set; }
-    public bool charahitToWall { get; set; } = false;
-    public bool isCharaHitToIn { get; set; } = true;
+    public bool charahitToWall { get; set; } 
+    public bool isCharaHitToIn { get; set; }
 
     private GameObject[] gameBlockPosition;
     private Vector3[,] baseBlockPosition;
     private Vector3[] destination;
     private int direction;
     private int[,] isBlockExit;
-    private bool blockMoveFlag = false;
+    private bool blockMoveFlag;
 
     // Start is called before the first frame update
     private void Start()
     {
+        charahitToWall = false;
+        isCharaHitToIn = true;
+        blockMoveFlag = false;
         //baseBlockの配置読み込み,isBlockExitを-1で初期化
         baseBlockPosition = new Vector3[size, size];
         isBlockExit = new int[size, size];
@@ -240,6 +244,10 @@ public class stageController : MonoBehaviour
                  "oncompletetarget", stage,
                 "oncomplete", "SetBlockMoveFlag"));
         }
+    }
+    public void GameReset()
+    {
+        SceneManager.LoadScene("Tutorial");
     }
 
     private void SetBlockMoveFlag()

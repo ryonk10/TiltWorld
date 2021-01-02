@@ -5,13 +5,14 @@ public class CharaController : MonoBehaviour
     public ButtonController buttonController;
     public float walkSpeed;
     public Vector3 charaExitBlockPosition { get; set; }
-    public bool doseStageReturn { get; set; } = false;
+    public bool doseStageReturn { get; set; } 
 
     private Vector3 charaDefaltPosition;
 
     // Start is called before the first frame update
     private void Start()
     {
+        doseStageReturn = false;
     }
 
     // Update is called once per frame
