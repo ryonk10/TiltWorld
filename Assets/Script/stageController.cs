@@ -1,22 +1,24 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class stageController : MonoBehaviour
 {
-   
     public GameObject stage;
     public CharaController charaController;
+    public ButtonController buttonController;
     public float speed;
     public int size;
     public int charaEnterBlock { get; set; }
     public int charaExitBlock { get; set; }
-    public bool charahitToWall { get; set; } 
+    public bool charahitToWall { get; set; }
     public bool isCharaHitToIn { get; set; }
 
     private GameObject[] gameBlockPosition;
     private Vector3[,] baseBlockPosition;
     private Vector3[] destination;
+    private List<Vector3[]> returnGameBlockPosition;
     private int direction;
     private int[,] isBlockExit;
     private bool blockMoveFlag;
@@ -27,10 +29,11 @@ public class stageController : MonoBehaviour
         charahitToWall = false;
         isCharaHitToIn = true;
         blockMoveFlag = false;
+        returnGameBlockPosition = new List<Vector3[]>();
         //baseBlockの配置読み込み,isBlockExitを-1で初期化
         baseBlockPosition = new Vector3[size, size];
         isBlockExit = new int[size, size];
-        for (var vertical=0;vertical<size;vertical++)
+        for (var vertical = 0; vertical < size; vertical++)
         {
             for (var horizon = 0; horizon < size; horizon++)
             {
@@ -70,7 +73,7 @@ public class stageController : MonoBehaviour
             //
             //ステージを戻す
             //
-            if (DoseStop()&&charahitToWall)
+            if (DoseStop() && charahitToWall)
             {
                 blockMoveFlag = false;
                 charahitToWall = false;
@@ -104,6 +107,7 @@ public class stageController : MonoBehaviour
 
     public void StageTilt(string direction)
     {
+        PrepareReturn();
         if (direction == "u")
         {
             this.direction = 0;
@@ -245,9 +249,56 @@ public class stageController : MonoBehaviour
                 "oncomplete", "SetBlockMoveFlag"));
         }
     }
+
     public void GameReset()
     {
         SceneManager.LoadScene("Tutorial");
+    }
+
+    public void GameReturn()
+    {
+        charahitToWall = false;
+        isCharaHitToIn = true;
+        blockMoveFlag = false;
+        stage.transform.rotation = Quaternion.Euler(0, 0, 0);
+        var lastIndex = returnGameBlockPosition.Count() - 1;
+        if (lastIndex < 0)
+        {
+            return;
+        }
+        var returnPosi = returnGameBlockPosition.Last();
+        var noneBlock = new Vector3(-1, -1, -1);
+        returnGameBlockPosition.RemoveAt(lastIndex);
+        for (var i = 0; i < size * size; i++)
+        {
+            isBlockExit[i / size, i % size] = -1;
+            if (returnPosi[i] != noneBlock)
+            {
+                gameBlockPosition[i].transform.localPosition = returnPosi[i];
+                destination[i] = returnPosi[i];
+                isBlockExit[i / size, i % size] = i;
+            }
+        }
+        charaController.ReturnCharaPosition();
+    }
+
+    public void PrepareReturn()
+    {
+        var returnPosi = new Vector3[size * size];
+        //リターン位置の登録
+        for (var i = 0; i < size * size; i++)
+        {
+            if (gameBlockPosition[i] != null)
+            {
+                returnPosi[i] = gameBlockPosition[i].transform.localPosition;
+            }
+            else
+            {
+                returnPosi[i] = new Vector3(-1, -1, -1);
+            }
+        }
+        returnGameBlockPosition.Add(returnPosi);
+        charaController.SetReturnCharaPosition();
     }
 
     private void SetBlockMoveFlag()
@@ -265,7 +316,7 @@ public class stageController : MonoBehaviour
         {
             charaController.charaExitBlockPosition = gameBlockPosition[charaExitBlock].transform.localPosition;
         }
-            charaController.doseStageReturn = true;
+        charaController.doseStageReturn = true;
     }
 
     private bool DoseStop()

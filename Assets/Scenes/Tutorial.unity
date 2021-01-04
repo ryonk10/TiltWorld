@@ -2185,6 +2185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stage: {fileID: 1261130149}
   charaController: {fileID: 1922578634}
+  buttonController: {fileID: 0}
   speed: 2
   size: 3
 --- !u!4 &1261130151
@@ -2284,7 +2285,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1324291211}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1261130150}
+        m_MethodName: GameReturn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1324291211
 MonoBehaviour:
   m_ObjectHideFlags: 0
