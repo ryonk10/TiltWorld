@@ -7,7 +7,6 @@ public class stageController : MonoBehaviour
 {
     public GameObject stage;
     public CharaController charaController;
-    public ButtonController buttonController;
     public float speed;
     public int size;
     public int charaEnterBlock { get; set; }
@@ -18,7 +17,7 @@ public class stageController : MonoBehaviour
     private GameObject[] gameBlockPosition;
     private Vector3[,] baseBlockPosition;
     private Vector3[] destination;
-    private List<Vector3[]> returnGameBlockPosition;
+    private List<ReturnGameClass> returnGameClass;
     private int direction;
     private int[,] isBlockExit;
     private bool blockMoveFlag;
@@ -29,7 +28,7 @@ public class stageController : MonoBehaviour
         charahitToWall = false;
         isCharaHitToIn = true;
         blockMoveFlag = false;
-        returnGameBlockPosition = new List<Vector3[]>();
+        returnGameClass = new List<ReturnGameClass>();
         //baseBlockの配置読み込み,isBlockExitを-1で初期化
         baseBlockPosition = new Vector3[size, size];
         isBlockExit = new int[size, size];
@@ -260,24 +259,22 @@ public class stageController : MonoBehaviour
         charahitToWall = false;
         isCharaHitToIn = true;
         blockMoveFlag = false;
-        stage.transform.rotation = Quaternion.Euler(0, 0, 0);
-        var lastIndex = returnGameBlockPosition.Count() - 1;
+        stage.transform.rotation = Quaternion.Euler(0, this.transform.localRotation.eulerAngles.y, 0);
+        var lastIndex = returnGameClass.Count() - 1;
         if (lastIndex < 0)
         {
             return;
         }
-        var returnPosi = returnGameBlockPosition.Last();
-        var noneBlock = new Vector3(-1, -1, -1);
-        returnGameBlockPosition.RemoveAt(lastIndex);
+        var tempReturnGameClass = returnGameClass.Last();
+        returnGameClass.RemoveAt(lastIndex);
         for (var i = 0; i < size * size; i++)
         {
-            isBlockExit[i / size, i % size] = -1;
-            if (returnPosi[i] != noneBlock)
+            if (gameBlockPosition[i] != null)
             {
-                gameBlockPosition[i].transform.localPosition = returnPosi[i];
-                destination[i] = returnPosi[i];
-                isBlockExit[i / size, i % size] = i;
+                gameBlockPosition[i].transform.localPosition = tempReturnGameClass.retrunGameBlockPosition[i];
+                destination[i] = tempReturnGameClass.retrunGameBlockPosition[i];
             }
+            isBlockExit[i / size, i % size] = tempReturnGameClass.returnIsExitBlock[i / size, i % size];
         }
         charaController.ReturnCharaPosition();
     }
@@ -285,6 +282,7 @@ public class stageController : MonoBehaviour
     public void PrepareReturn()
     {
         var returnPosi = new Vector3[size * size];
+        var retrunIsExi = new int[size, size];
         //リターン位置の登録
         for (var i = 0; i < size * size; i++)
         {
@@ -296,8 +294,10 @@ public class stageController : MonoBehaviour
             {
                 returnPosi[i] = new Vector3(-1, -1, -1);
             }
+            retrunIsExi[i / size, i % size] = isBlockExit[i / size, i % size];
         }
-        returnGameBlockPosition.Add(returnPosi);
+        var tempRetrunGmaeClass = new ReturnGameClass(returnPosi, retrunIsExi);
+        returnGameClass.Add(tempRetrunGmaeClass);
         charaController.SetReturnCharaPosition();
     }
 
@@ -333,5 +333,16 @@ public class stageController : MonoBehaviour
             }
         }
         return true;
+    }
+
+    class ReturnGameClass
+    {
+        public Vector3[] retrunGameBlockPosition { get; set; }
+        public int[,] returnIsExitBlock { get; set; }
+        public ReturnGameClass(Vector3[] retrunPosi,int[,] isExblo)
+        {
+            this.retrunGameBlockPosition = retrunPosi;
+            this.returnIsExitBlock = isExblo;
+        }
     }
 }
