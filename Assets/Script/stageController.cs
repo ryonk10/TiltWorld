@@ -8,6 +8,7 @@ public class stageController : MonoBehaviour
     public GameObject stage;
     public CharaController charaController;
     public float speed;
+    public float tiltDigree;
     public int size;
     public int charaEnterBlock { get; set; }
     public int charaExitBlock { get; set; }
@@ -138,7 +139,7 @@ public class stageController : MonoBehaviour
                 }
             }
             iTween.RotateTo(stage, iTween.Hash(
-                "x", 45f,
+                "x", tiltDigree,
                 "oncompletetarget", stage,
                 "oncomplete", "SetBlockMoveFlag"));
         }
@@ -173,7 +174,7 @@ public class stageController : MonoBehaviour
                 }
             }
             iTween.RotateTo(stage, iTween.Hash(
-                "x", -45f,
+                "x", -tiltDigree,
                  "oncompletetarget", stage,
                 "oncomplete", "SetBlockMoveFlag"));
         }
@@ -208,7 +209,7 @@ public class stageController : MonoBehaviour
                 }
             }
             iTween.RotateTo(stage, iTween.Hash(
-                "z", -45f,
+                "z", -tiltDigree,
                  "oncompletetarget", stage,
                 "oncomplete", "SetBlockMoveFlag"));
         }
@@ -243,7 +244,7 @@ public class stageController : MonoBehaviour
                 }
             }
             iTween.RotateTo(stage, iTween.Hash(
-                "z", 45f,
+                "z", tiltDigree,
                  "oncompletetarget", stage,
                 "oncomplete", "SetBlockMoveFlag"));
         }
