@@ -9,13 +9,11 @@ public class CharaController : MonoBehaviour
     public bool doseStageReturn { get; set; }
 
     private Vector3 charaDefaltPosition;
-    private List<Vector3> returnCharaPosition;
 
     // Start is called before the first frame update
     private void Start()
     {
         doseStageReturn = false;
-        returnCharaPosition = new List<Vector3>();
     }
 
     // Update is called once per frame
@@ -36,16 +34,13 @@ public class CharaController : MonoBehaviour
         }
     }
 
-    public void SetReturnCharaPosition()
+    public Vector3 GetReturnCharaPosition()
     {
-        returnCharaPosition.Add(this.transform.localPosition);
+        return this.transform.localPosition;
     }
 
-    public void ReturnCharaPosition()
+    public void ReturnCharaPosition(Vector3 charaPosi)
     {
-        var lastIndex = returnCharaPosition.Count - 1;
-        this.transform.localPosition = returnCharaPosition[lastIndex];
-        returnCharaPosition.RemoveAt(lastIndex);
-        buttonController.ChangeInteractableToTrue();
+        this.transform.localPosition = charaPosi;
     }
 }

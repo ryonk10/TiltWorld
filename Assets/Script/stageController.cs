@@ -7,6 +7,7 @@ public class stageController : MonoBehaviour
 {
     public GameObject stage;
     public CharaController charaController;
+    public ButtonController buttonController;
     public float speed;
     public float tiltDigree;
     public int size;
@@ -54,6 +55,7 @@ public class stageController : MonoBehaviour
             destination[index] = blocks[i].transform.localPosition;
             isBlockExit[index / size, index % size] = index;
         }
+        PrepareReturn();
     }
 
     // Update is called once per frame
@@ -252,32 +254,20 @@ public class stageController : MonoBehaviour
 
     public void GameReset()
     {
-        SceneManager.LoadScene("Tutorial");
+        if (1 < returnGameClass.Count)
+        {
+            GameBack(0);
+        }
     }
 
-    public void GameReturn()
+    public void GameRetrun()
     {
-        charahitToWall = false;
-        isCharaHitToIn = true;
-        blockMoveFlag = false;
-        stage.transform.rotation = Quaternion.Euler(0, this.transform.localRotation.eulerAngles.y, 0);
-        var lastIndex = returnGameClass.Count() - 1;
-        if (lastIndex < 0)
+        var lastIndex = returnGameClass.Count - 1;
+        if (0 < lastIndex)
         {
-            return;
+            GameBack(lastIndex);
+            returnGameClass.RemoveAt(lastIndex);
         }
-        var tempReturnGameClass = returnGameClass.Last();
-        returnGameClass.RemoveAt(lastIndex);
-        for (var i = 0; i < size * size; i++)
-        {
-            if (gameBlockPosition[i] != null)
-            {
-                gameBlockPosition[i].transform.localPosition = tempReturnGameClass.retrunGameBlockPosition[i];
-                destination[i] = tempReturnGameClass.retrunGameBlockPosition[i];
-            }
-            isBlockExit[i / size, i % size] = tempReturnGameClass.returnIsExitBlock[i / size, i % size];
-        }
-        charaController.ReturnCharaPosition();
     }
 
     public void PrepareReturn()
@@ -297,9 +287,28 @@ public class stageController : MonoBehaviour
             }
             retrunIsExi[i / size, i % size] = isBlockExit[i / size, i % size];
         }
-        var tempRetrunGmaeClass = new ReturnGameClass(returnPosi, retrunIsExi);
+        var tempRetrunGmaeClass = new ReturnGameClass(returnPosi,charaController.GetReturnCharaPosition(), retrunIsExi);
         returnGameClass.Add(tempRetrunGmaeClass);
-        charaController.SetReturnCharaPosition();
+        buttonController.ChangeInteractableToTrue();
+    }
+
+    private void GameBack(int backIndex)
+    {
+        charahitToWall = false;
+        isCharaHitToIn = true;
+        blockMoveFlag = false;
+        stage.transform.rotation = Quaternion.Euler(0, this.transform.localRotation.eulerAngles.y, 0);
+        var tempReturnGameClass = returnGameClass[backIndex];
+        for (var i = 0; i < size * size; i++)
+        {
+            if (gameBlockPosition[i] != null)
+            {
+                gameBlockPosition[i].transform.localPosition = tempReturnGameClass.retrunGameBlockPosition[i];
+                destination[i] = tempReturnGameClass.retrunGameBlockPosition[i];
+            }
+            isBlockExit[i / size, i % size] = tempReturnGameClass.returnIsExitBlock[i / size, i % size];
+        }
+        charaController.ReturnCharaPosition(tempReturnGameClass.returnCharaPosition);
     }
 
     private void SetBlockMoveFlag()
@@ -339,10 +348,12 @@ public class stageController : MonoBehaviour
     class ReturnGameClass
     {
         public Vector3[] retrunGameBlockPosition { get; set; }
+        public Vector3 returnCharaPosition { get; set; }
         public int[,] returnIsExitBlock { get; set; }
-        public ReturnGameClass(Vector3[] retrunPosi,int[,] isExblo)
+        public ReturnGameClass(Vector3[] retrunPosi,Vector3 returnCharaPosi, int[,] isExblo)
         {
             this.retrunGameBlockPosition = retrunPosi;
+            this.returnCharaPosition = returnCharaPosi;
             this.returnIsExitBlock = isExblo;
         }
     }
