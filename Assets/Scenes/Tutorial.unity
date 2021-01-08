@@ -628,7 +628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400076, guid: 69c3ed15e9d13481e8f7dc4db5532fb6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.029999971
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 400076, guid: 69c3ed15e9d13481e8f7dc4db5532fb6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -636,7 +636,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400076, guid: 69c3ed15e9d13481e8f7dc4db5532fb6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.05
+      value: -0.02
       objectReference: {fileID: 0}
     - target: {fileID: 400076, guid: 69c3ed15e9d13481e8f7dc4db5532fb6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1367,6 +1367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 136712213243828740, guid: 68dad9db2dc9d2249aa0a58c5d2adc36, type: 3}
+    - {fileID: 205512977738328948, guid: 68dad9db2dc9d2249aa0a58c5d2adc36, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 68dad9db2dc9d2249aa0a58c5d2adc36, type: 3}
 --- !u!4 &785284982 stripped
 Transform:
@@ -2238,7 +2239,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 205767385942840526, guid: 1530caefe50f68042978f4b8cd52a92b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1530caefe50f68042978f4b8cd52a92b, type: 3}
 --- !u!1001 &1127353563
 PrefabInstance:
@@ -2488,7 +2490,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 205767385942840526, guid: 1530caefe50f68042978f4b8cd52a92b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1530caefe50f68042978f4b8cd52a92b, type: 3}
 --- !u!1 &1261130149
 GameObject:
@@ -5563,7 +5566,8 @@ PrefabInstance:
       propertyPath: stageCon
       value: 
       objectReference: {fileID: 1261130150}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2549439985046600896, guid: 71d9a19ddb468ff4392343749b5e9811, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 71d9a19ddb468ff4392343749b5e9811, type: 3}
 --- !u!1001 &4613035830819898120
 PrefabInstance:
@@ -5717,7 +5721,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: cutTree
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5334485506978000616, guid: a143d30bfa060454a998851bf69b5c21, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a143d30bfa060454a998851bf69b5c21, type: 3}
 --- !u!1001 &7463926009642968708
 PrefabInstance:
@@ -5791,7 +5796,8 @@ PrefabInstance:
       propertyPath: stageCon
       value: 
       objectReference: {fileID: 1261130150}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1973360443278429206, guid: 203ec0d43144690458226227f06d4fe4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 203ec0d43144690458226227f06d4fe4, type: 3}
 --- !u!4 &9088534856481353890 stripped
 Transform:
