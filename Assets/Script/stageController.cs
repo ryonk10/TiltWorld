@@ -254,10 +254,7 @@ public class stageController : MonoBehaviour
 
     public void GameReset()
     {
-        if (1 < returnGameClass.Count)
-        {
-            GameBack(0);
-        }
+        GameBack(0);
     }
 
     public void GameRetrun()
@@ -289,7 +286,6 @@ public class stageController : MonoBehaviour
         }
         var tempRetrunGmaeClass = new ReturnGameClass(returnPosi,charaController.GetReturnCharaPosition(), retrunIsExi);
         returnGameClass.Add(tempRetrunGmaeClass);
-        buttonController.ChangeInteractableToTrue();
     }
 
     private void GameBack(int backIndex)
@@ -297,6 +293,7 @@ public class stageController : MonoBehaviour
         charahitToWall = false;
         isCharaHitToIn = true;
         blockMoveFlag = false;
+        buttonController.ChangeInteractableToTrue();
         stage.transform.rotation = Quaternion.Euler(0, this.transform.localRotation.eulerAngles.y, 0);
         var tempReturnGameClass = returnGameClass[backIndex];
         for (var i = 0; i < size * size; i++)
