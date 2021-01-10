@@ -13,16 +13,17 @@ public class stageController : MonoBehaviour
     public int size;
     public int charaEnterBlock { get; set; }
     public int charaExitBlock { get; set; }
+    public int direction { get; set; }
     public bool charahitToWall { get; set; }
     public bool isCharaHitToIn { get; set; }
+    public bool blockMoveFlag { get; set; }
 
     private GameObject[] gameBlockPosition;
     private Vector3[,] baseBlockPosition;
     private Vector3[] destination;
     private List<ReturnGameClass> returnGameClass;
-    private int direction;
+    
     private int[,] isBlockExit;
-    private bool blockMoveFlag;
 
     // Start is called before the first frame update
     private void Start()
@@ -77,15 +78,7 @@ public class stageController : MonoBehaviour
             //
             if (DoseStop() && charahitToWall)
             {
-                blockMoveFlag = false;
-                charahitToWall = false;
-                if (direction == 0)
-                {
-                    iTween.RotateTo(stage, iTween.Hash("x", 0f,
-                        "oncompletetarget", stage,
-                "oncomplete", "MoveCharaToDefaltPosition"));
-                }
-                else if (direction == 1)
+                if (direction == 1)
                 {
                     iTween.RotateTo(stage, iTween.Hash("x", 0f,
                         "oncompletetarget", stage,
@@ -93,11 +86,17 @@ public class stageController : MonoBehaviour
                 }
                 else if (direction == 2)
                 {
-                    iTween.RotateTo(stage, iTween.Hash("z", 0f,
+                    iTween.RotateTo(stage, iTween.Hash("x", 0f,
                         "oncompletetarget", stage,
                 "oncomplete", "MoveCharaToDefaltPosition"));
                 }
                 else if (direction == 3)
+                {
+                    iTween.RotateTo(stage, iTween.Hash("z", 0f,
+                        "oncompletetarget", stage,
+                "oncomplete", "MoveCharaToDefaltPosition"));
+                }
+                else if (direction == 4)
                 {
                     iTween.RotateTo(stage, iTween.Hash("z", 0f,
                         "oncompletetarget", stage,
@@ -112,7 +111,7 @@ public class stageController : MonoBehaviour
         PrepareReturn();
         if (direction == "u")
         {
-            this.direction = 0;
+            this.direction = 1;
             //それぞれのブロックの移動位置設定
             for (int vertical = size - 2; 0 <= vertical; vertical--)
             {
@@ -147,7 +146,7 @@ public class stageController : MonoBehaviour
         }
         else if (direction == "d")
         {
-            this.direction = 1;
+            this.direction = 2;
             //それぞれのブロックの移動位置設定
             for (int vertical = 1; vertical < size; vertical++)
             {
@@ -182,7 +181,7 @@ public class stageController : MonoBehaviour
         }
         else if (direction == "r")
         {
-            this.direction = 2;
+            this.direction = 3;
             //それぞれのブロックの移動位置設定
             for (int horizon = size - 2; 0 <= horizon; horizon--)
             {
@@ -217,7 +216,7 @@ public class stageController : MonoBehaviour
         }
         else if (direction == "l")
         {
-            this.direction = 3;
+            this.direction = 4;
             //それぞれのブロックの移動位置設定
             for (int horizon = 1; horizon < size; horizon++)
             {

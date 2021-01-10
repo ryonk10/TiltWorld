@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 5247292381289889974}
   - component: {fileID: 5235502759979895358}
   - component: {fileID: 5228314299099783240}
-  - component: {fileID: 5203964400194851722}
-  - component: {fileID: 5334485506978000616}
   - component: {fileID: 3988063144074874341}
+  - component: {fileID: 3827020149811341691}
   m_Layer: 0
   m_Name: cutTree
   m_TagString: Untagged
@@ -82,39 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &5203964400194851722
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5249021743559934148}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: d2ca050f69144e34b94336affffbef2a, type: 3}
---- !u!205 &5334485506978000616
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5249021743559934148}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: -0.02574271, y: 0.040050924, z: 0.04381305}
-  m_Size: 0.7124649
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.033564575
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 5228314299099783240}
-  m_Enabled: 1
 --- !u!114 &3988063144074874341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,3 +94,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageCon: {fileID: 0}
+--- !u!65 &3827020149811341691
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5249021743559934148}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.57220656, y: 0.6350717, z: 0.48046172}
+  m_Center: {x: -0.038118534, y: 0.040050913, z: 0.01845737}

@@ -4,6 +4,7 @@ using UnityEngine;
 public class CharaController : MonoBehaviour
 {
     public ButtonController buttonController;
+    public stageController stageCon;
     public float walkSpeed;
     public Vector3 charaExitBlockPosition { get; set; }
     public bool doseStageReturn { get; set; }
@@ -29,6 +30,8 @@ public class CharaController : MonoBehaviour
                 .z < charaDefaltPosition.z + 0.1))
             {
                 doseStageReturn = false;
+                stageCon.charahitToWall = false;
+                stageCon.blockMoveFlag = false;
                 buttonController.ChangeInteractableToTrue();
             }
         }

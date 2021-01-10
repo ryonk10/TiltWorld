@@ -11,9 +11,6 @@ GameObject:
   - component: {fileID: 2429037760163842164}
   - component: {fileID: 2432856123841579266}
   - component: {fileID: 2445441648404976126}
-  - component: {fileID: 2404604551943700202}
-  - component: {fileID: 2549439985046600896}
-  - component: {fileID: 8671527245961816396}
   m_Layer: 0
   m_Name: sign
   m_TagString: Untagged
@@ -82,49 +79,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &2404604551943700202
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2431909353230016776}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 5b51913d07f805546855136f7b5feb44, type: 3}
---- !u!205 &2549439985046600896
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2431909353230016776}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: -0.09841174, y: 0.38177305, z: -0.016747877}
-  m_Size: 1.051388
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.03
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 2445441648404976126}
-  m_Enabled: 1
---- !u!114 &8671527245961816396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2431909353230016776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b587d66dee7b5c7448cd1dd33510b597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stageCon: {fileID: 0}
