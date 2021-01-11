@@ -8,6 +8,7 @@ public class stageController : MonoBehaviour
     public GameObject stage;
     public CharaController charaController;
     public ButtonController buttonController;
+    public List<ReturnGameClass> returnGameClass;
     public float speed;
     public float tiltDigree;
     public int size;
@@ -21,13 +22,13 @@ public class stageController : MonoBehaviour
     private GameObject[] gameBlockPosition;
     private Vector3[,] baseBlockPosition;
     private Vector3[] destination;
-    private List<ReturnGameClass> returnGameClass;
-    
     private int[,] isBlockExit;
+    private Animator animator;
 
     // Start is called before the first frame update
     private void Start()
     {
+        animator = GetComponent<Animator>();
         charahitToWall = false;
         isCharaHitToIn = true;
         blockMoveFlag = false;
@@ -109,6 +110,7 @@ public class stageController : MonoBehaviour
     public void StageTilt(string direction)
     {
         PrepareReturn();
+        animator.SetTrigger("SetIdle");
         if (direction == "u")
         {
             this.direction = 1;
@@ -314,6 +316,7 @@ public class stageController : MonoBehaviour
 
     private void MoveCharaToDefaltPosition()
     {
+        animator.SetTrigger("SetMove");
         if (isCharaHitToIn)
         {
             charaController.charaExitBlockPosition = gameBlockPosition[charaEnterBlock].transform.localPosition;
@@ -341,7 +344,7 @@ public class stageController : MonoBehaviour
         return true;
     }
 
-    class ReturnGameClass
+    public class ReturnGameClass
     {
         public Vector3[] retrunGameBlockPosition { get; set; }
         public Vector3 returnCharaPosition { get; set; }
