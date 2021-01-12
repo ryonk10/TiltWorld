@@ -16,7 +16,6 @@ public class GoalCheker : MonoBehaviour
     {
         if (other.gameObject.name == "chara")
         {
-            quad2.SetActive(false);
             mainCamera.enabled = false;
             subCamera.enabled = true;
             text.SetActive(true);
