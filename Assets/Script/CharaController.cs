@@ -8,32 +8,39 @@ public class CharaController : MonoBehaviour
     public float walkSpeed;
     public Vector3 charaExitBlockPosition { get; set; }
     public bool doseStageReturn { get; set; }
+    public bool notGoal { get; set; }
 
     private Vector3 charaDefaltPosition;
+    private Rigidbody rigi;
 
     // Start is called before the first frame update
     private void Start()
     {
         doseStageReturn = false;
+        notGoal = true;
+        rigi = this.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (doseStageReturn)
+        if (doseStageReturn&&notGoal)
         {
             float step = walkSpeed * Time.deltaTime;
             charaDefaltPosition = new Vector3(charaExitBlockPosition.x, 0.5f, charaExitBlockPosition.z);
             this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, charaDefaltPosition, step);
-            if ((charaDefaltPosition.x - 0.1 < this.transform.localPosition.x) && (this.transform.localPosition.x < charaDefaltPosition.x + 0.1) &&
-                (charaDefaltPosition.z - 0.1 < this.transform.localPosition.z) && (this.transform.localPosition
-                .z < charaDefaltPosition.z + 0.1))
+            if ((charaDefaltPosition.x==this.transform.localPosition.x) 
+                && (charaDefaltPosition.z==this.transform.localPosition.z))
             {
                 doseStageReturn = false;
-                stageCon.charahitToWall = false;
-                stageCon.blockMoveFlag = false;
+               
                 buttonController.ChangeInteractableToTrue();
             }
+        }
+        else if (notGoal == false)
+        {
+            float step = 0.01f * Time.deltaTime;
+            this.rigi.velocity = new Vector3(0, 0, 0.5f);
         }
     }
 

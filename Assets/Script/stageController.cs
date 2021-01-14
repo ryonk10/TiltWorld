@@ -25,6 +25,7 @@ public class stageController : MonoBehaviour
     private int[,] isBlockExit;
     private Animator animator;
 
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -79,6 +80,8 @@ public class stageController : MonoBehaviour
             //
             if (DoseStop() && charahitToWall)
             {
+                charahitToWall = false;
+                blockMoveFlag = false;
                 if (direction == 1)
                 {
                     iTween.RotateTo(stage, iTween.Hash("x", 0f,
