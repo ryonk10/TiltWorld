@@ -12,6 +12,7 @@ public class stageController : MonoBehaviour
     public List<ReturnGameClass> returnGameClass;
     public float speed;
     public float tiltDigree;
+    public float tiltSpeed;
     public int size;
     public int charaEnterBlock { get; set; }
     public int charaExitBlock { get; set; }
@@ -24,14 +25,14 @@ public class stageController : MonoBehaviour
     private Vector3[,] baseBlockPosition;
     private Vector3[] destination;
     private int[,] isBlockExit;
-    private int tiltDegree;
+    private float nowDegree;
     private Animator animator;
 
 
     // Start is called before the first frame update
     private void Start()
     {
-        tiltDegree = 0;
+        nowDegree = 0;
         animator = GetComponent<Animator>();
         charahitToWall = false;
         isCharaHitToIn = true;
@@ -353,11 +354,12 @@ public class stageController : MonoBehaviour
         return true;
     }
 
-    /*IEnumerator StageTilt(int direction,int degree)
+    /*IEnumerator StageTilt(Vector3 tiltDirection,int degree)
     {
-
-        while ((tiltDegree < degree) && blockMoveFlag)
+        
+        while ((nowDegree < degree) && blockMoveFlag)
         {
+            
             this.transform.Rotate(new Vector3())
         }
     }*/
