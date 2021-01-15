@@ -13,11 +13,13 @@ public class TutorialEvent: MonoBehaviour
     public Button returnbut;
     public Text textInformation;
     public GameObject tutorialSupportImage;
+    public GameObject tutorialSupportImage1;
     public GameObject tutorialSupportImage2;
     public GameObject informationSupportImage;
     public GameObject checkTutorial;
     public GameObject block;
     public GameObject informationPanel;
+    public GameObject gameInfo;
     public stageController stageCon;
     public Rigidbody charaRigit;
 
@@ -68,8 +70,7 @@ public class TutorialEvent: MonoBehaviour
         textInformation.text = "また、時に間違ってしまい\nやり直したいことも\nあるでしょう。";
         yield return new WaitUntil(() =>Input.GetMouseButtonUp(0));
         yield return null;
-        tutorialSupportImage.gameObject.transform.localPosition = new Vector3(-58, -146, 0);
-        tutorialSupportImage.SetActive(true);
+        tutorialSupportImage1.SetActive(true);
         tutorialSupportImage2.SetActive(true);
         textInformation.text = "大丈夫です。\nそういう方の為に\nリセットボタン・リターンボタン\nがあります。";
         yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
@@ -83,7 +84,7 @@ public class TutorialEvent: MonoBehaviour
         resetbut.interactable = true;
         yield return new WaitUntil(() => block.gameObject.transform.localPosition==Vector3.zero);
         yield return null;
-        tutorialSupportImage.SetActive(false);
+        tutorialSupportImage1.SetActive(false);
         informationSupportImage.SetActive(true);
         resetbut.interactable = false;
         textInformation.text = "これで最初の位置に\n戻りましたね。";
@@ -112,6 +113,7 @@ public class TutorialEvent: MonoBehaviour
         left.interactable = true;
         resetbut.interactable = true;
         returnbut.interactable = true;
+        gameInfo.SetActive(true);
         Destroy(this.gameObject);
     }
 }

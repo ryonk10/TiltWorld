@@ -11,6 +11,7 @@ public class GoalCheker : MonoBehaviour
     public GameObject text;
     public GameObject clearForm;
     public GameObject button;
+    public GameObject gameInfo;
     public CharaController charaController;
     public Animator endAnim;
     public Animator charaAnim;
@@ -28,6 +29,7 @@ public class GoalCheker : MonoBehaviour
             clearForm.SetActive(true);
             quad2.SetActive(false);
             charaController.notGoal = false;
+            gameInfo.SetActive(false);
             endAnim.SetTrigger("StartCutOut");
             charaAnim.SetFloat("Speed",0.2f);
         }
