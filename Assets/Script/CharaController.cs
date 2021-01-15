@@ -40,7 +40,7 @@ public class CharaController : MonoBehaviour
         else if (notGoal == false)
         {
             float step = 0.01f * Time.deltaTime;
-            this.rigi.velocity = new Vector3(0, 0, 0.5f);
+            this.rigi.velocity = new Vector3(0.1f, 0, 0.5f);
         }
     }
 
@@ -51,6 +51,9 @@ public class CharaController : MonoBehaviour
 
     public void ReturnCharaPosition(Vector3 charaPosi)
     {
+        var block = GameObject.FindGameObjectWithTag("block");
+        this.transform.parent = block.transform;
+        this.rigi.drag = 0;
         this.transform.localPosition = charaPosi;
     }
 }

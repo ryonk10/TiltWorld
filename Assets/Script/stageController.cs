@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class stageController : MonoBehaviour
 {
     public GameObject stage;
+    public GameObject chara;
     public CharaController charaController;
     public ButtonController buttonController;
     public List<ReturnGameClass> returnGameClass;
@@ -23,12 +24,14 @@ public class stageController : MonoBehaviour
     private Vector3[,] baseBlockPosition;
     private Vector3[] destination;
     private int[,] isBlockExit;
+    private int tiltDegree;
     private Animator animator;
 
 
     // Start is called before the first frame update
     private void Start()
     {
+        tiltDegree = 0;
         animator = GetComponent<Animator>();
         charahitToWall = false;
         isCharaHitToIn = true;
@@ -80,6 +83,7 @@ public class stageController : MonoBehaviour
             //
             if (DoseStop() && charahitToWall)
             {
+                chara.gameObject.transform.parent = gameBlockPosition[0].transform.parent;
                 charahitToWall = false;
                 blockMoveFlag = false;
                 if (direction == 1)
@@ -323,6 +327,8 @@ public class stageController : MonoBehaviour
         if (isCharaHitToIn)
         {
             charaController.charaExitBlockPosition = gameBlockPosition[charaEnterBlock].transform.localPosition;
+            var rig = chara.gameObject.GetComponent<Rigidbody>();
+            rig.drag = 0;
         }
         else
         {
@@ -346,6 +352,15 @@ public class stageController : MonoBehaviour
         }
         return true;
     }
+
+    /*IEnumerator StageTilt(int direction,int degree)
+    {
+
+        while ((tiltDegree < degree) && blockMoveFlag)
+        {
+            this.transform.Rotate(new Vector3())
+        }
+    }*/
 
     public class ReturnGameClass
     {

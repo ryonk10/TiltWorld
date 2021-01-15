@@ -6,6 +6,7 @@ TagManager:
   tags:
   - block
   - BlockPosition
+  - wall
   layers:
   - Default
   - TransparentFX

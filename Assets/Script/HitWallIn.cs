@@ -15,6 +15,12 @@ public class HitWallIn : MonoBehaviour
         {
             stageCon.isCharaHitToIn = true;
             stageCon.charahitToWall = true;
+            if (this.gameObject.tag != "wall")
+            {
+                var rig = collision.gameObject.GetComponent<Rigidbody>();
+                rig.drag = 50;
+                collision.gameObject.transform.parent = this.transform.parent.parent.parent;
+            }
         }
     }
 }

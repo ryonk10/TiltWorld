@@ -7,7 +7,7 @@ public class ButtonController : MonoBehaviour
 {
     public stageController stageCon;
     public Button up, down, left, right;
-
+  
     // Start is called before the first frame update
     public void ChageInteractableToFalse(string direction)
     {
