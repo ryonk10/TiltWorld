@@ -329,7 +329,7 @@ public class stageController : MonoBehaviour
         {
             charaController.charaExitBlockPosition = gameBlockPosition[charaEnterBlock].transform.localPosition;
             var rig = chara.gameObject.GetComponent<Rigidbody>();
-            rig.drag = 0;
+            rig.drag = 1;
         }
         else
         {
