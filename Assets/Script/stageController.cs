@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,7 +12,6 @@ public class stageController : MonoBehaviour
     public List<ReturnGameClass> returnGameClass;
     public float speed;
     public float tiltDigree;
-    public float tiltSpeed;
     public int size;
     public int charaEnterBlock { get; set; }
     public int charaExitBlock { get; set; }
@@ -27,23 +24,16 @@ public class stageController : MonoBehaviour
     private Vector3[,] baseBlockPosition;
     private Vector3[] destination;
     private int[,] isBlockExit;
-<<<<<<< HEAD
-    private  bool tiltFlag;
-=======
-    private float nowDegree;
->>>>>>> parent of 87c47ef (カメラ調整)
     private Animator animator;
 
 
     // Start is called before the first frame update
     private void Start()
     {
-        nowDegree = 0;
         animator = GetComponent<Animator>();
         charahitToWall = false;
         isCharaHitToIn = true;
         blockMoveFlag = false;
-        tiltFlag = true;
         returnGameClass = new List<ReturnGameClass>();
         //baseBlockの配置読み込み,isBlockExitを-1で初期化
         baseBlockPosition = new Vector3[size, size];
@@ -94,86 +84,32 @@ public class stageController : MonoBehaviour
                 chara.gameObject.transform.parent = gameBlockPosition[0].transform.parent;
                 charahitToWall = false;
                 blockMoveFlag = false;
-                if (tiltFlag)
-                {
-                    StartCoroutine(Tilt(Vector3.zero, direction, 1));
-                }
-            }
-        }
-    }
-
-    //destaDegreeは目的のVector3、directionは軸、type=1は傾ける、type=-1傾きを戻す
-    IEnumerator Tilt(Vector3 destiDegree, int direction, int type)
-    {
-        var check = new Vector3(0, this.transform.localEulerAngles.y, 0);
-        var now = 0f;
-        do
-        {
-            if (type == 0)
-            {
                 if (direction == 1)
                 {
-                    this.transform.Rotate(new Vector3(destiDegree.x * tiltSpeed * Time.deltaTime, 0, 0));
-                    now =this.transform.localEulerAngles.x;
-                }
-                else if(direction == 2)
-                {
-                    this.transform.Rotate(new Vector3(destiDegree.x * tiltSpeed * Time.deltaTime, 0, 0));
-                    now = 360 - this.transform.localEulerAngles.x;
-                }
-                else if (direction == 3)
-                {
-                    this.transform.Rotate(new Vector3(0, 0, destiDegree.z * tiltSpeed * Time.deltaTime));
-                    now = 360-this.transform.localEulerAngles.z;
-                }
-                else if (direction == 4)
-                {
-                    this.transform.Rotate(new Vector3(0, 0, destiDegree.z * tiltSpeed * Time.deltaTime));
-                    now =this.transform.localEulerAngles.z;
-                }
-               
-                if (tiltDigree < now)
-                {
-                    this.transform.localEulerAngles = destiDegree;
-                    SetBlockMoveFlag();
-                    yield break;
-                }
-            }
-            else if (type == 1)
-            {
-                if (direction == 1)
-                {
-                    this.transform.Rotate(new Vector3(-tiltDigree * tiltSpeed * Time.deltaTime, 0, 0));
-                    now =this.transform.localEulerAngles.x;
+                    iTween.RotateTo(stage, iTween.Hash("x", 0f,
+                        "oncompletetarget", stage,
+                "oncomplete", "MoveCharaToDefaltPosition"));
                 }
                 else if (direction == 2)
                 {
-                    this.transform.Rotate(new Vector3(tiltDigree * tiltSpeed * Time.deltaTime, 0, 0));
-                    now = 360 - this.transform.localEulerAngles.x;
+                    iTween.RotateTo(stage, iTween.Hash("x", 0f,
+                        "oncompletetarget", stage,
+                "oncomplete", "MoveCharaToDefaltPosition"));
                 }
                 else if (direction == 3)
                 {
-                    this.transform.Rotate(new Vector3(0, 0, tiltDigree * tiltSpeed * Time.deltaTime));
-                    now = 360 - this.transform.localEulerAngles.z;
+                    iTween.RotateTo(stage, iTween.Hash("z", 0f,
+                        "oncompletetarget", stage,
+                "oncomplete", "MoveCharaToDefaltPosition"));
                 }
                 else if (direction == 4)
                 {
-                    this.transform.Rotate(new Vector3(0, 0, -tiltDigree * tiltSpeed * Time.deltaTime));
-                    now =this.transform.localEulerAngles.z;
+                    iTween.RotateTo(stage, iTween.Hash("z", 0f,
+                        "oncompletetarget", stage,
+                "oncomplete", "MoveCharaToDefaltPosition"));
                 }
-                if (tiltDigree < now)
-                {
-                        this.transform.localEulerAngles = check;
-                        tiltFlag = true;
-                        MoveCharaToDefaltPosition();
-                        yield break;
-                }
-
             }
-            yield return null;
-
-        } while (this.transform.localEulerAngles != check);
-        tiltFlag = true;
+        }
     }
 
     public void StageTilt(string direction)
@@ -210,9 +146,10 @@ public class stageController : MonoBehaviour
                     destination[number] = baseBlockPosition[t - 1, horizon];
                 }
             }
-            var destiDegree = new Vector3(tiltDigree, this.transform.localEulerAngles.y, 0);
-            StartCoroutine(Tilt(destiDegree,this.direction,0));
-            
+            iTween.RotateTo(stage, iTween.Hash(
+                "x", tiltDigree,
+                "oncompletetarget", stage,
+                "oncomplete", "SetBlockMoveFlag"));
         }
         else if (direction == "d")
         {
@@ -244,8 +181,10 @@ public class stageController : MonoBehaviour
                     destination[number] = baseBlockPosition[t + 1, horizon];
                 }
             }
-            var destiDegree = new Vector3(-tiltDigree, this.transform.localEulerAngles.y, 0);
-            StartCoroutine(Tilt(destiDegree, this.direction, 0));
+            iTween.RotateTo(stage, iTween.Hash(
+                "x", -tiltDigree,
+                 "oncompletetarget", stage,
+                "oncomplete", "SetBlockMoveFlag"));
         }
         else if (direction == "r")
         {
@@ -277,8 +216,10 @@ public class stageController : MonoBehaviour
                     destination[number] = baseBlockPosition[vertical, t - 1];
                 }
             }
-            var destiDegree = new Vector3(0, this.transform.localEulerAngles.y, -tiltDigree);
-            StartCoroutine(Tilt(destiDegree, this.direction, 0));
+            iTween.RotateTo(stage, iTween.Hash(
+                "z", -tiltDigree,
+                 "oncompletetarget", stage,
+                "oncomplete", "SetBlockMoveFlag"));
         }
         else if (direction == "l")
         {
@@ -310,13 +251,16 @@ public class stageController : MonoBehaviour
                     destination[number] = baseBlockPosition[vertical, t + 1];
                 }
             }
-            var destiDegree = new Vector3(0, this.transform.localEulerAngles.y, tiltDigree);
-            StartCoroutine(Tilt(destiDegree, this.direction, 0));
+            iTween.RotateTo(stage, iTween.Hash(
+                "z", tiltDigree,
+                 "oncompletetarget", stage,
+                "oncomplete", "SetBlockMoveFlag"));
         }
     }
 
     public void GameReset()
     {
+        charaController.charaExitBlockPosition = Vector3.zero;
         GameBack(0);
     }
 
@@ -356,7 +300,6 @@ public class stageController : MonoBehaviour
         charahitToWall = false;
         isCharaHitToIn = true;
         blockMoveFlag = false;
-        StopAllCoroutines();
         buttonController.ChangeInteractableToTrue();
         stage.transform.rotation = Quaternion.Euler(0, this.transform.localRotation.eulerAngles.y, 0);
         var tempReturnGameClass = returnGameClass[backIndex];
@@ -384,7 +327,7 @@ public class stageController : MonoBehaviour
         {
             charaController.charaExitBlockPosition = gameBlockPosition[charaEnterBlock].transform.localPosition;
             var rig = chara.gameObject.GetComponent<Rigidbody>();
-            rig.drag = 1;
+            rig.drag = 2;
         }
         else
         {
@@ -408,16 +351,6 @@ public class stageController : MonoBehaviour
         }
         return true;
     }
-
-    /*IEnumerator StageTilt(Vector3 tiltDirection,int degree)
-    {
-        
-        while ((nowDegree < degree) && blockMoveFlag)
-        {
-            
-            this.transform.Rotate(new Vector3())
-        }
-    }*/
 
     public class ReturnGameClass
     {
