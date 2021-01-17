@@ -53,7 +53,7 @@ public class CharaController : MonoBehaviour
     {
         var block = GameObject.FindGameObjectWithTag("block");
         this.transform.parent = block.transform.parent;
-        this.rigi.drag = 2;
+        this.rigi.drag = 1;
         this.transform.localPosition = charaPosi;
     }
 }
