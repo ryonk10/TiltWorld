@@ -2589,6 +2589,8 @@ MonoBehaviour:
   down: {fileID: 2118255022}
   left: {fileID: 704777609}
   right: {fileID: 887280699}
+  reSet: {fileID: 1551268425}
+  reTrun: {fileID: 1324291210}
 --- !u!4 &460901726
 Transform:
   m_ObjectHideFlags: 0
@@ -6203,7 +6205,6 @@ MonoBehaviour:
   buttonController: {fileID: 460901725}
   speed: 2
   tiltDigree: 45
-  tiltSpeed: 0
   size: 3
 --- !u!4 &1261130151
 Transform:

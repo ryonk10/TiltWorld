@@ -318,6 +318,7 @@ public class stageController : MonoBehaviour
     private void SetBlockMoveFlag()
     {
         blockMoveFlag = true;
+        buttonController.ResetReturnToTure();
     }
 
     private void MoveCharaToDefaltPosition()
