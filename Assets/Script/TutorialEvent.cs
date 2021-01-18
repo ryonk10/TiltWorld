@@ -25,10 +25,12 @@ public class TutorialEvent: MonoBehaviour
 
     private int direction;
     private bool buttonflag;
+    private bool resetflag;
     // Start is called before the first frame update
     void Start()
     {
         buttonflag = false;
+        resetflag = true;
     }
 
     // Update is called once per frame
@@ -40,6 +42,11 @@ public class TutorialEvent: MonoBehaviour
             down.interactable = false;
             right.interactable = false;
             left.interactable = false;
+        }
+        if (resetflag)
+        {
+            resetbut.interactable = false;
+            returnbut.interactable = false;
         }
     }
 
@@ -72,6 +79,7 @@ public class TutorialEvent: MonoBehaviour
         yield return null;
         tutorialSupportImage1.SetActive(true);
         tutorialSupportImage2.SetActive(true);
+        resetflag = false;
         textInformation.text = "大丈夫です。\nそういう方の為に\nリセットボタン・リターンボタン\nがあります。";
         yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
         yield return null;
