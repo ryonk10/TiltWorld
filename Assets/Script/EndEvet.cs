@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class EndEvet: MonoBehaviour
 {
+    public GameSceneManager gameSceneManager;
+    public GoogleAdsManager googleAdsManager;
     public GameObject endCanvas;
     public Animator anim;
 
@@ -21,9 +23,19 @@ public class EndEvet: MonoBehaviour
     {
         endCanvas.SetActive(true);
     }
+
     public void ReStartGame()
     {
-        SceneManager.LoadScene("Tutorial");
+        gameSceneManager.NextSceneLoad("Tutorial");
+        StartCoroutine(CheckCLosedAds());
     }
 
+    IEnumerator CheckCLosedAds()
+    {
+        while (googleAdsManager.isAdsClosed == false)
+        {
+            yield return null;
+        }
+        gameSceneManager.NextSceneStart();
+    }
 }
