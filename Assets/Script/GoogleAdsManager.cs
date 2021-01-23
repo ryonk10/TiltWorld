@@ -24,7 +24,7 @@ public class GoogleAdsManager : MonoBehaviour
 
     private void RequestInterstitial()
     {
-        string adUnitId = "ca-app-pub-3940256099942544/1033173712";
+        string adUnitId = "ca-app-pub-4215221151256725/3210840280";
 
         // Initialize an InterstitialAd.
         this.interstitial = new InterstitialAd(adUnitId);
@@ -58,5 +58,7 @@ public class GoogleAdsManager : MonoBehaviour
             isAdsClosed = false;
             this.interstitial.Show();
         }
+        else
+            isAdsClosed = true;
     }
 }
