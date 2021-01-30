@@ -7,6 +7,9 @@ TagManager:
   - block
   - BlockPosition
   - wall
+  - Stage
+  - Chara
+  - ButtonController
   layers:
   - Default
   - TransparentFX

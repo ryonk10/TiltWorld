@@ -3,19 +3,19 @@ using UnityEngine;
 
 public class CharaController : MonoBehaviour
 {
-    public ButtonController buttonController;
-    public stageController stageCon;
     public float walkSpeed;
     public Vector3 charaExitBlockPosition { get; set; }
     public bool doseStageReturn { get; set; }
     public bool notGoal { get; set; }
 
+    private ButtonController buttonController;
     private Vector3 charaDefaltPosition;
     private Rigidbody rigi;
 
     // Start is called before the first frame update
     private void Start()
     {
+        buttonController = GameObject.FindGameObjectWithTag("ButtonController").GetComponent<ButtonController>();
         doseStageReturn = false;
         notGoal = true;
         rigi = this.GetComponent<Rigidbody>();
@@ -55,5 +55,10 @@ public class CharaController : MonoBehaviour
         this.transform.parent = block.transform.parent;
         this.rigi.drag = 2;
         this.transform.localPosition = charaPosi;
+    }
+
+    public void MoveParentToBlock(GameObject target)
+    {
+        this.transform.parent = target.transform.parent;
     }
 }

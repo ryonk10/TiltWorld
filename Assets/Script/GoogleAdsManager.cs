@@ -14,7 +14,7 @@ public class GoogleAdsManager : MonoBehaviour
     private InterstitialAd interstitial;
 
     // Start is called before the first frame update
-    public void Start()
+    private void Start()
     {
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(initStatus => { });

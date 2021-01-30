@@ -431,12 +431,12 @@ PrefabInstance:
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 1566000734302453538, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 1769573197627803263, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: m_RootOrder
@@ -446,12 +446,12 @@ PrefabInstance:
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 2641300898739359777, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 4442525831631442064, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: m_RootOrder
@@ -2511,6 +2511,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100076, guid: 69c3ed15e9d13481e8f7dc4db5532fb6, type: 3}
+      propertyPath: m_TagString
+      value: Chara
+      objectReference: {fileID: 0}
     - target: {fileID: 400076, guid: 69c3ed15e9d13481e8f7dc4db5532fb6, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -2638,7 +2642,7 @@ GameObject:
   - component: {fileID: 460901725}
   m_Layer: 0
   m_Name: ButtonController
-  m_TagString: Untagged
+  m_TagString: ButtonController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2655,7 +2659,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3dce651afcc3db428f6544f891b0814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCon: {fileID: 1261130150}
   up: {fileID: 2101228953}
   down: {fileID: 2118255022}
   left: {fileID: 704777609}
@@ -2738,7 +2741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabc1afd20981e54090c8f7e83e1c0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCon: {fileID: 1261130150}
 --- !u!1 &472531228
 GameObject:
   m_ObjectHideFlags: 0
@@ -2851,7 +2853,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b34f286bb64a1884ab06c9760c9f5afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCon: {fileID: 1261130150}
 --- !u!1001 &503438205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3440,7 +3441,7 @@ MonoBehaviour:
   block: {fileID: 1480781536}
   informationPanel: {fileID: 1336442699}
   gameInfo: {fileID: 2146817509}
-  stageCon: {fileID: 1261130150}
+  stageCon: {fileID: 0}
   charaRigit: {fileID: 1922578628}
 --- !u!222 &550863742
 CanvasRenderer:
@@ -4489,7 +4490,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabc1afd20981e54090c8f7e83e1c0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCon: {fileID: 1261130150}
 --- !u!4 &869829279 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5274202328849785482, guid: 8db5424111076314fbd5d29f944c1fbc,
@@ -4556,7 +4556,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabc1afd20981e54090c8f7e83e1c0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCon: {fileID: 1261130150}
 --- !u!1001 &873217683
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5444,7 +5443,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b587d66dee7b5c7448cd1dd33510b597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCon: {fileID: 1261130150}
 --- !u!1001 &1039425108
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5661,7 +5659,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabc1afd20981e54090c8f7e83e1c0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCon: {fileID: 1261130150}
 --- !u!4 &1085460585 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5274202328849785482, guid: 8db5424111076314fbd5d29f944c1fbc,
@@ -5812,7 +5809,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b587d66dee7b5c7448cd1dd33510b597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCon: {fileID: 1261130150}
 --- !u!1001 &1127353563
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5824,12 +5820,12 @@ PrefabInstance:
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 1566000734302453538, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 1769573197627803263, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: m_RootOrder
@@ -5854,12 +5850,12 @@ PrefabInstance:
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 2641300898739359777, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 4442525831631442064, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: m_RootOrder
@@ -6251,11 +6247,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1261130151}
-  - component: {fileID: 1261130150}
   - component: {fileID: 1261130152}
+  - component: {fileID: 1261130150}
   m_Layer: 0
   m_Name: stage
-  m_TagString: Untagged
+  m_TagString: Stage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6272,10 +6268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 803f83a0ad4146b42b0ffffd6c958bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: {fileID: 1261130149}
-  chara: {fileID: 1922578624}
-  charaController: {fileID: 1922578634}
-  buttonController: {fileID: 460901725}
   speed: 2
   tiltDigree: 45
   size: 3
@@ -6710,8 +6702,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1261130150}
-        m_MethodName: GameRetrun
+      - m_Target: {fileID: 460901725}
+        m_MethodName: GameReturn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6963,7 +6955,7 @@ PrefabInstance:
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 214369647514801155, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -6998,7 +6990,7 @@ PrefabInstance:
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 1769573197627803263, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: m_RootOrder
@@ -7023,12 +7015,12 @@ PrefabInstance:
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 2641300898739359777, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 3234025017780738056, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -7395,7 +7387,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabc1afd20981e54090c8f7e83e1c0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCon: {fileID: 1261130150}
 --- !u!1 &1471468324
 GameObject:
   m_ObjectHideFlags: 0
@@ -7462,7 +7453,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabc1afd20981e54090c8f7e83e1c0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCon: {fileID: 1261130150}
 --- !u!1 &1480781536
 GameObject:
   m_ObjectHideFlags: 0
@@ -7524,7 +7514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabc1afd20981e54090c8f7e83e1c0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCon: {fileID: 1261130150}
 --- !u!1001 &1496181866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7829,7 +7818,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1261130150}
+      - m_Target: {fileID: 460901725}
         m_MethodName: GameReset
         m_Mode: 1
         m_Arguments:
@@ -9872,8 +9861,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c17d5c56c78b8fa4883d0d9a445242e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonController: {fileID: 460901725}
-  stageCon: {fileID: 1261130150}
   walkSpeed: 0.5
 --- !u!1001 &1924266597
 PrefabInstance:
@@ -9961,12 +9948,12 @@ PrefabInstance:
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 1566000734302453538, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 1769573197627803263, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: m_RootOrder
@@ -9991,12 +9978,12 @@ PrefabInstance:
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 2641300898739359777, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 4442525831631442064, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: m_RootOrder
@@ -10207,7 +10194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b34f286bb64a1884ab06c9760c9f5afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCon: {fileID: 1261130150}
 --- !u!4 &2007791079 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1769573197627803263, guid: 4ca42f350ef4ca2469d56166bf059317,
@@ -10590,7 +10576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b34f286bb64a1884ab06c9760c9f5afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCon: {fileID: 1261130150}
 --- !u!4 &2057509578 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 56c560d102650b145ab98e7c67f68450,
@@ -10802,7 +10787,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b34f286bb64a1884ab06c9760c9f5afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCon: {fileID: 1261130150}
 --- !u!1001 &2067648921
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11512,12 +11496,12 @@ PrefabInstance:
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 1566000734302453538, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 1769573197627803263, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: m_RootOrder
@@ -11577,12 +11561,12 @@ PrefabInstance:
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 2641300898739359777, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: stageCon
       value: 
-      objectReference: {fileID: 1261130150}
+      objectReference: {fileID: 0}
     - target: {fileID: 6727014109270625112, guid: 4ca42f350ef4ca2469d56166bf059317,
         type: 3}
       propertyPath: m_Name

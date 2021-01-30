@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class HitWallIn : MonoBehaviour
 {
-    public stageController stageCon;
-
+    private stageController stageCon;
     // Start is called before the first frame update
-   
+    private void Start()
+    {
+        stageCon = GameObject.FindGameObjectWithTag("Stage").GetComponent<stageController>();
+    }
 
     private void OnCollisionEnter(Collision collision)
     {

@@ -5,10 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class stageController : MonoBehaviour
 {
-    public GameObject stage;
-    public GameObject chara;
-    public CharaController charaController;
-    public ButtonController buttonController;
     public List<ReturnGameClass> returnGameClass;
     public float speed;
     public float tiltDigree;
@@ -21,8 +17,12 @@ public class stageController : MonoBehaviour
     public bool blockMoveFlag { get; set; }
 
     private GameObject[] gameBlockPosition;
+    private GameObject chara;
+    private ButtonController buttonController;
+    private CharaController charaController;
     private Vector3[,] baseBlockPosition;
     private Vector3[] destination;
+    //-1=空白　-2=固定ブロック
     private int[,] isBlockExit;
     private Animator animator;
 
@@ -30,6 +30,9 @@ public class stageController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        chara = GameObject.FindGameObjectWithTag("Chara");
+        charaController = chara.GetComponent<CharaController>();
+        buttonController = GameObject.FindGameObjectWithTag("ButtonController").GetComponent<ButtonController>();
         animator = GetComponent<Animator>();
         charahitToWall = false;
         isCharaHitToIn = true;
@@ -52,11 +55,12 @@ public class stageController : MonoBehaviour
         gameBlockPosition = new GameObject[size * size];
         destination = new Vector3[size * size];
         var blocks = GameObject.FindGameObjectsWithTag("block");
-        for (var i = 0; i < blocks.Length; i++)
+        foreach (var block in blocks)
         {
-            var index = int.Parse(blocks[i].name);
-            gameBlockPosition[index] = blocks[i];
-            destination[index] = blocks[i].transform.localPosition;
+            var index=(int)(block.transform.localPosition.z*size+block.transform.localPosition.x);
+            block.gameObject.name = index.ToString();
+            gameBlockPosition[index] = block;
+            destination[index] = block.transform.localPosition;
             isBlockExit[index / size, index % size] = index;
         }
         PrepareReturn();
@@ -81,31 +85,31 @@ public class stageController : MonoBehaviour
             //
             if (DoseStop() && charahitToWall)
             {
-                chara.gameObject.transform.parent = gameBlockPosition[0].transform.parent;
+                charaController.MoveParentToBlock(gameBlockPosition[0]);
                 charahitToWall = false;
                 blockMoveFlag = false;
                 if (direction == 1)
                 {
-                    iTween.RotateTo(stage, iTween.Hash("x", 0f,
-                        "oncompletetarget", stage,
+                    iTween.RotateTo(this.gameObject, iTween.Hash("x", 0f,
+                        "oncompletetarget",this.gameObject,
                 "oncomplete", "MoveCharaToDefaltPosition"));
                 }
                 else if (direction == 2)
                 {
-                    iTween.RotateTo(stage, iTween.Hash("x", 0f,
-                        "oncompletetarget", stage,
+                    iTween.RotateTo(this.gameObject, iTween.Hash("x", 0f,
+                        "oncompletetarget", this.gameObject,
                 "oncomplete", "MoveCharaToDefaltPosition"));
                 }
                 else if (direction == 3)
                 {
-                    iTween.RotateTo(stage, iTween.Hash("z", 0f,
-                        "oncompletetarget", stage,
+                    iTween.RotateTo(this.gameObject, iTween.Hash("z", 0f,
+                        "oncompletetarget", this.gameObject,
                 "oncomplete", "MoveCharaToDefaltPosition"));
                 }
                 else if (direction == 4)
                 {
-                    iTween.RotateTo(stage, iTween.Hash("z", 0f,
-                        "oncompletetarget", stage,
+                    iTween.RotateTo(this.gameObject, iTween.Hash("z", 0f,
+                        "oncompletetarget",this.gameObject,
                 "oncomplete", "MoveCharaToDefaltPosition"));
                 }
             }
@@ -120,24 +124,27 @@ public class stageController : MonoBehaviour
         {
             this.direction = 1;
             //それぞれのブロックの移動位置設定
+            //一番上の列はそれ以上前には進まないから２列目から調査
             for (int vertical = size - 2; 0 <= vertical; vertical--)
             {
                 for (int horizon = 0; horizon < size; horizon++)
                 {
-                    if (isBlockExit[vertical, horizon] == -1)
+                    if (isBlockExit[vertical, horizon] == -1||isBlockExit[vertical,horizon]==-2)
                     {
                         continue;
                     }
                     var t = vertical + 1;
                     var number = isBlockExit[vertical, horizon];
+                    //自分より上が空白かを調べる
                     while (t < size)
                     {
-                        if (0 <= isBlockExit[t, horizon])
+                        if (0 <= isBlockExit[t, horizon]||isBlockExit[t,horizon]==-2)
                         {
                             break;
                         }
                         else
                         {
+                            //空白をとりあえず動かす予定のブロックの目標地点として登録して、さらに前が空白かを調べる
                             isBlockExit[t - 1, horizon] = -1;
                             isBlockExit[t, horizon] = number;
                             t++;
@@ -146,9 +153,9 @@ public class stageController : MonoBehaviour
                     destination[number] = baseBlockPosition[t - 1, horizon];
                 }
             }
-            iTween.RotateTo(stage, iTween.Hash(
+            iTween.RotateTo(this.gameObject, iTween.Hash(
                 "x", tiltDigree,
-                "oncompletetarget", stage,
+                "oncompletetarget", this.gameObject,
                 "oncomplete", "SetBlockMoveFlag"));
         }
         else if (direction == "d")
@@ -181,9 +188,9 @@ public class stageController : MonoBehaviour
                     destination[number] = baseBlockPosition[t + 1, horizon];
                 }
             }
-            iTween.RotateTo(stage, iTween.Hash(
+            iTween.RotateTo(this.gameObject, iTween.Hash(
                 "x", -tiltDigree,
-                 "oncompletetarget", stage,
+                 "oncompletetarget", this.gameObject,
                 "oncomplete", "SetBlockMoveFlag"));
         }
         else if (direction == "r")
@@ -216,9 +223,9 @@ public class stageController : MonoBehaviour
                     destination[number] = baseBlockPosition[vertical, t - 1];
                 }
             }
-            iTween.RotateTo(stage, iTween.Hash(
+            iTween.RotateTo(this.gameObject, iTween.Hash(
                 "z", -tiltDigree,
-                 "oncompletetarget", stage,
+                 "oncompletetarget", this.gameObject,
                 "oncomplete", "SetBlockMoveFlag"));
         }
         else if (direction == "l")
@@ -251,9 +258,9 @@ public class stageController : MonoBehaviour
                     destination[number] = baseBlockPosition[vertical, t + 1];
                 }
             }
-            iTween.RotateTo(stage, iTween.Hash(
+            iTween.RotateTo(this.gameObject, iTween.Hash(
                 "z", tiltDigree,
-                 "oncompletetarget", stage,
+                 "oncompletetarget", this.gameObject,
                 "oncomplete", "SetBlockMoveFlag"));
         }
     }
@@ -301,7 +308,7 @@ public class stageController : MonoBehaviour
         isCharaHitToIn = true;
         blockMoveFlag = false;
         buttonController.ChangeInteractableToTrue();
-        stage.transform.rotation = Quaternion.Euler(0, this.transform.localRotation.eulerAngles.y, 0);
+        this.transform.rotation = Quaternion.Euler(0, this.transform.localRotation.eulerAngles.y, 0);
         var tempReturnGameClass = returnGameClass[backIndex];
         for (var i = 0; i < size * size; i++)
         {
@@ -327,7 +334,7 @@ public class stageController : MonoBehaviour
         if (isCharaHitToIn)
         {
             charaController.charaExitBlockPosition = gameBlockPosition[charaEnterBlock].transform.localPosition;
-            var rig = chara.gameObject.GetComponent<Rigidbody>();
+            var rig = chara.GetComponent<Rigidbody>();
             rig.drag = 2;
         }
         else
