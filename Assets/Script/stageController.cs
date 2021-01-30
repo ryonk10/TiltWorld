@@ -57,11 +57,22 @@ public class stageController : MonoBehaviour
         var blocks = GameObject.FindGameObjectsWithTag("block");
         foreach (var block in blocks)
         {
-            var index=(int)(block.transform.localPosition.z*size+block.transform.localPosition.x);
-            block.gameObject.name = index.ToString();
-            gameBlockPosition[index] = block;
-            destination[index] = block.transform.localPosition;
-            isBlockExit[index / size, index % size] = index;
+            var index = (int)(block.transform.localPosition.z * size + block.transform.localPosition.x);
+            if (block.gameObject.name.Contains("F"))
+            {
+                block.gameObject.name = index.ToString();
+                isBlockExit[index / size, index % size] = -2;
+                continue;
+            }
+            else
+            {
+                block.gameObject.name = index.ToString();
+                gameBlockPosition[index] = block;
+                destination[index] = block.transform.localPosition;
+                isBlockExit[index / size, index % size] = index;
+            }
+           
+
         }
         PrepareReturn();
     }
@@ -129,7 +140,7 @@ public class stageController : MonoBehaviour
             {
                 for (int horizon = 0; horizon < size; horizon++)
                 {
-                    if (isBlockExit[vertical, horizon] == -1||isBlockExit[vertical,horizon]==-2)
+                    if (isBlockExit[vertical, horizon] < 0)
                     {
                         continue;
                     }
@@ -138,13 +149,13 @@ public class stageController : MonoBehaviour
                     //自分より上が空白かを調べる
                     while (t < size)
                     {
-                        if (0 <= isBlockExit[t, horizon]||isBlockExit[t,horizon]==-2)
+                        if (isBlockExit[t, horizon] != -1)
                         {
                             break;
                         }
                         else
                         {
-                            //空白をとりあえず動かす予定のブロックの目標地点として登録して、さらに前が空白かを調べる
+                            //現在地が空白であり、現在地をとりあえず動かす予定のブロックの目標地点として登録して、さらに前が空白かを調べる
                             isBlockExit[t - 1, horizon] = -1;
                             isBlockExit[t, horizon] = number;
                             t++;
@@ -166,7 +177,7 @@ public class stageController : MonoBehaviour
             {
                 for (int horizon = 0; horizon < size; horizon++)
                 {
-                    if (isBlockExit[vertical, horizon] == -1)
+                    if (isBlockExit[vertical, horizon] < 0)
                     {
                         continue;
                     }
@@ -174,7 +185,7 @@ public class stageController : MonoBehaviour
                     var number = isBlockExit[vertical, horizon];
                     while (0 <= t)
                     {
-                        if (0 <= isBlockExit[t, horizon])
+                        if (isBlockExit[t, horizon] != -1)
                         {
                             break;
                         }
@@ -201,7 +212,7 @@ public class stageController : MonoBehaviour
             {
                 for (int vertical = 0; vertical < size; vertical++)
                 {
-                    if (isBlockExit[vertical, horizon] == -1)
+                    if (isBlockExit[vertical, horizon] < 0)
                     {
                         continue;
                     }
@@ -209,7 +220,7 @@ public class stageController : MonoBehaviour
                     var number = isBlockExit[vertical, horizon];
                     while (t < size)
                     {
-                        if (0 <= isBlockExit[vertical, t])
+                        if (isBlockExit[vertical, t] != -1)
                         {
                             break;
                         }
@@ -236,7 +247,7 @@ public class stageController : MonoBehaviour
             {
                 for (int vertical = 0; vertical < size; vertical++)
                 {
-                    if (isBlockExit[vertical, horizon] == -1)
+                    if (isBlockExit[vertical, horizon] < 0)
                     {
                         continue;
                     }
@@ -244,7 +255,7 @@ public class stageController : MonoBehaviour
                     var number = isBlockExit[vertical, horizon];
                     while (0 <= t)
                     {
-                        if (0 <= isBlockExit[vertical, t])
+                        if (isBlockExit[vertical, t] != -1)
                         {
                             break;
                         }
@@ -335,7 +346,7 @@ public class stageController : MonoBehaviour
         {
             charaController.charaExitBlockPosition = gameBlockPosition[charaEnterBlock].transform.localPosition;
             var rig = chara.GetComponent<Rigidbody>();
-            rig.drag = 2;
+            rig.drag = 1;
         }
         else
         {

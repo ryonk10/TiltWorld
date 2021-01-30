@@ -15,7 +15,7 @@ public class EnterBlock : MonoBehaviour
     {
         if (collision.gameObject.name == "chara")
         {
-            stageCon.charaEnterBlock = int.Parse(this.name);
+            stageCon.charaEnterBlock =int.Parse(this.name);
         }
     }
 
