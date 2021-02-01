@@ -32,10 +32,6 @@ public class stageController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        chara = GameObject.FindGameObjectWithTag("Chara");
-        charaController = chara.GetComponent<CharaController>();
-        buttonController = GameObject.FindGameObjectWithTag("ButtonController").GetComponent<ButtonController>();
-        animator = GetComponent<Animator>();
         charahitToWall = false;
         isCharaHitToIn = true;
         blockMoveFlag = false;
@@ -98,6 +94,10 @@ public class stageController : MonoBehaviour
 
     public void StageInitialize()
     {
+        chara = GameObject.FindGameObjectWithTag("Chara");
+        charaController = chara.GetComponent<CharaController>();
+        buttonController = GameObject.FindGameObjectWithTag("ButtonController").GetComponent<ButtonController>();
+        animator = GetComponent<Animator>();
         animator.SetTrigger("SetMove");
         returnGameClass = new List<ReturnGameClass>();
         //baseBlockの配置読み込み,isBlockExitを-1で初期化

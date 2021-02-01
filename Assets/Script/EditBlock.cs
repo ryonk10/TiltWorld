@@ -1,18 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EditBlock : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHandler,IEndDragHandler,IDropHandler
+public class EditBlock : MonoBehaviour, IPointerClickHandler, IDragHandler, IBeginDragHandler, IEndDragHandler, IDropHandler
 {
+    private GameObject blockH;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         
     }
@@ -21,31 +20,25 @@ public class EditBlock : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginD
     {
         this.transform.Rotate(0, 90, 0);
     }
+
     public void OnDrag(PointerEventData eventData)
     {
-        var ray = RectTransformUtility.ScreenPointToRay(Camera.main, eventData.position);
-        RaycastHit hit;
-        if(Physics.Raycast(ray,out hit))
-        {
-            this.transform.position = hit.point;
-        }
-       
+       blockH.transform.position= Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y));
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        blockH = (GameObject)Instantiate(this.gameObject, this.transform.position, this.transform.rotation);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        Destroy(blockH);
+        Debug.Log("end");
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        Debug.Log("s");
     }
-
-   
 }
