@@ -27,7 +27,7 @@ public class CharaController : MonoBehaviour
         if (doseStageReturn&&notGoal)
         {
             float step = walkSpeed * Time.deltaTime;
-            charaDefaltPosition = new Vector3(charaExitBlockPosition.x, 0.5f, charaExitBlockPosition.z);
+            charaDefaltPosition = new Vector3(charaExitBlockPosition.x, this.transform.localPosition.y, charaExitBlockPosition.z);
             this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, charaDefaltPosition, step);
             if ((charaDefaltPosition.x==this.transform.localPosition.x) 
                 && (charaDefaltPosition.z==this.transform.localPosition.z))
@@ -39,8 +39,8 @@ public class CharaController : MonoBehaviour
         }
         else if (notGoal == false)
         {
-            float step = 0.01f * Time.deltaTime;
-            this.rigi.velocity = new Vector3(0.1f, 0, 0.5f);
+            float step = 5 * Time.deltaTime;
+            this.rigi.velocity = new Vector3(1, 0, 5)*step;
         }
     }
 

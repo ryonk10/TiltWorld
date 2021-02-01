@@ -8,7 +8,9 @@ public class stageController : MonoBehaviour
     public List<ReturnGameClass> returnGameClass;
     public float speed;
     public float tiltDigree;
-    public int size;
+    public int verticalSize;
+    public int horizonSize;
+    public bool isEditMode;
     public int charaEnterBlock { get; set; }
     public int charaExitBlock { get; set; }
     public int direction { get; set; }
@@ -37,44 +39,11 @@ public class stageController : MonoBehaviour
         charahitToWall = false;
         isCharaHitToIn = true;
         blockMoveFlag = false;
-        returnGameClass = new List<ReturnGameClass>();
-        //baseBlockの配置読み込み,isBlockExitを-1で初期化
-        baseBlockPosition = new Vector3[size, size];
-        isBlockExit = new int[size, size];
-        for (var vertical = 0; vertical < size; vertical++)
+        if (isEditMode==false)
         {
-            for (var horizon = 0; horizon < size; horizon++)
-            {
-                baseBlockPosition[vertical, horizon] = new Vector3(horizon, 0, vertical);
-                isBlockExit[vertical, horizon] = -1;
-            }
+            StageInitialize();
+            PrepareReturn();
         }
-        //
-        //blockの配置読み込み
-        //
-        gameBlockPosition = new GameObject[size * size];
-        destination = new Vector3[size * size];
-        var blocks = GameObject.FindGameObjectsWithTag("block");
-        foreach (var block in blocks)
-        {
-            var index = (int)(block.transform.localPosition.z * size + block.transform.localPosition.x);
-            if (block.gameObject.name.Contains("F"))
-            {
-                block.gameObject.name = index.ToString();
-                isBlockExit[index / size, index % size] = -2;
-                continue;
-            }
-            else
-            {
-                block.gameObject.name = index.ToString();
-                gameBlockPosition[index] = block;
-                destination[index] = block.transform.localPosition;
-                isBlockExit[index / size, index % size] = index;
-            }
-           
-
-        }
-        PrepareReturn();
     }
 
     // Update is called once per frame
@@ -84,7 +53,7 @@ public class stageController : MonoBehaviour
         {
             //ブロック移動
             float step = speed * Time.deltaTime;
-            for (var index = 0; index < size * size; index++)
+            for (var index = 0; index < verticalSize * horizonSize; index++)
             {
                 if (gameBlockPosition[index] != null)
                 {
@@ -127,6 +96,46 @@ public class stageController : MonoBehaviour
         }
     }
 
+    public void StageInitialize()
+    {
+        animator.SetTrigger("SetMove");
+        returnGameClass = new List<ReturnGameClass>();
+        //baseBlockの配置読み込み,isBlockExitを-1で初期化
+        baseBlockPosition = new Vector3[verticalSize, horizonSize];
+        isBlockExit = new int[verticalSize, horizonSize];
+        for (var vertical = 0; vertical < verticalSize; vertical++)
+        {
+            for (var horizon = 0; horizon < horizonSize; horizon++)
+            {
+                baseBlockPosition[vertical, horizon] = new Vector3(horizon, 0, vertical);
+                isBlockExit[vertical, horizon] = -1;
+            }
+        }
+        //
+        //blockの配置読み込み
+        //
+        gameBlockPosition = new GameObject[verticalSize * horizonSize];
+        destination = new Vector3[verticalSize * horizonSize];
+        var blocks = GameObject.FindGameObjectsWithTag("block");
+        foreach (var block in blocks)
+        {
+            var index = (int)(block.transform.localPosition.z * horizonSize + block.transform.localPosition.x);
+            if (block.gameObject.name.Contains("F"))
+            {
+                block.gameObject.name = index.ToString();
+                isBlockExit[index / horizonSize, index % horizonSize] = -2;
+                continue;
+            }
+            else
+            {
+                block.gameObject.name = index.ToString();
+                gameBlockPosition[index] = block;
+                destination[index] = block.transform.localPosition;
+                isBlockExit[index / horizonSize, index % horizonSize] = index;
+            }
+        }
+    }
+
     public void StageTilt(string direction)
     {
         PrepareReturn();
@@ -136,9 +145,9 @@ public class stageController : MonoBehaviour
             this.direction = 1;
             //それぞれのブロックの移動位置設定
             //一番上の列はそれ以上前には進まないから２列目から調査
-            for (int vertical = size - 2; 0 <= vertical; vertical--)
+            for (int vertical = verticalSize - 2; 0 <= vertical; vertical--)
             {
-                for (int horizon = 0; horizon < size; horizon++)
+                for (int horizon = 0; horizon < horizonSize; horizon++)
                 {
                     if (isBlockExit[vertical, horizon] < 0)
                     {
@@ -147,7 +156,7 @@ public class stageController : MonoBehaviour
                     var t = vertical + 1;
                     var number = isBlockExit[vertical, horizon];
                     //自分より上が空白かを調べる
-                    while (t < size)
+                    while (t < verticalSize)
                     {
                         if (isBlockExit[t, horizon] != -1)
                         {
@@ -173,9 +182,9 @@ public class stageController : MonoBehaviour
         {
             this.direction = 2;
             //それぞれのブロックの移動位置設定
-            for (int vertical = 1; vertical < size; vertical++)
+            for (int vertical = 1; vertical < verticalSize; vertical++)
             {
-                for (int horizon = 0; horizon < size; horizon++)
+                for (int horizon = 0; horizon < horizonSize; horizon++)
                 {
                     if (isBlockExit[vertical, horizon] < 0)
                     {
@@ -208,9 +217,9 @@ public class stageController : MonoBehaviour
         {
             this.direction = 3;
             //それぞれのブロックの移動位置設定
-            for (int horizon = size - 2; 0 <= horizon; horizon--)
+            for (int horizon = horizonSize - 2; 0 <= horizon; horizon--)
             {
-                for (int vertical = 0; vertical < size; vertical++)
+                for (int vertical = 0; vertical < verticalSize; vertical++)
                 {
                     if (isBlockExit[vertical, horizon] < 0)
                     {
@@ -218,7 +227,7 @@ public class stageController : MonoBehaviour
                     }
                     var t = horizon + 1;
                     var number = isBlockExit[vertical, horizon];
-                    while (t < size)
+                    while (t < horizonSize)
                     {
                         if (isBlockExit[vertical, t] != -1)
                         {
@@ -243,9 +252,9 @@ public class stageController : MonoBehaviour
         {
             this.direction = 4;
             //それぞれのブロックの移動位置設定
-            for (int horizon = 1; horizon < size; horizon++)
+            for (int horizon = 1; horizon < horizonSize; horizon++)
             {
-                for (int vertical = 0; vertical < size; vertical++)
+                for (int vertical = 0; vertical < verticalSize; vertical++)
                 {
                     if (isBlockExit[vertical, horizon] < 0)
                     {
@@ -294,10 +303,10 @@ public class stageController : MonoBehaviour
 
     public void PrepareReturn()
     {
-        var returnPosi = new Vector3[size * size];
-        var retrunIsExi = new int[size, size];
+        var returnPosi = new Vector3[verticalSize * horizonSize];
+        var retrunIsExi = new int[verticalSize, horizonSize];
         //リターン位置の登録
-        for (var i = 0; i < size * size; i++)
+        for (var i = 0; i < verticalSize * horizonSize; i++)
         {
             if (gameBlockPosition[i] != null)
             {
@@ -307,7 +316,7 @@ public class stageController : MonoBehaviour
             {
                 returnPosi[i] = new Vector3(-1, -1, -1);
             }
-            retrunIsExi[i / size, i % size] = isBlockExit[i / size, i % size];
+            retrunIsExi[i / horizonSize, i % horizonSize] = isBlockExit[i / horizonSize, i % horizonSize];
         }
         var tempRetrunGmaeClass = new ReturnGameClass(returnPosi,charaController.GetReturnCharaPosition(), retrunIsExi);
         returnGameClass.Add(tempRetrunGmaeClass);
@@ -321,14 +330,14 @@ public class stageController : MonoBehaviour
         buttonController.ChangeInteractableToTrue();
         this.transform.rotation = Quaternion.Euler(0, this.transform.localRotation.eulerAngles.y, 0);
         var tempReturnGameClass = returnGameClass[backIndex];
-        for (var i = 0; i < size * size; i++)
+        for (var i = 0; i < verticalSize * horizonSize; i++)
         {
             if (gameBlockPosition[i] != null)
             {
                 gameBlockPosition[i].transform.localPosition = tempReturnGameClass.retrunGameBlockPosition[i];
                 destination[i] = tempReturnGameClass.retrunGameBlockPosition[i];
             }
-            isBlockExit[i / size, i % size] = tempReturnGameClass.returnIsExitBlock[i / size, i % size];
+            isBlockExit[i / horizonSize, i % horizonSize] = tempReturnGameClass.returnIsExitBlock[i / horizonSize, i % horizonSize];
         }
         charaController.ReturnCharaPosition(tempReturnGameClass.returnCharaPosition);
     }
@@ -357,7 +366,7 @@ public class stageController : MonoBehaviour
 
     private bool DoseStop()
     {
-        for (var index = 0; index < size * size; index++)
+        for (var index = 0; index < verticalSize * horizonSize; index++)
         {
             if (gameBlockPosition[index] == null)
             {

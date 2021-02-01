@@ -12,12 +12,16 @@ public class GoalCheker : MonoBehaviour
     public GameObject clearForm;
     public GameObject button;
     public GameObject gameInfo;
-    public CharaController charaController;
     public Animator endAnim;
-    public Animator charaAnim;
-    
+
+    private CharaController charaController;
+
+    private void Start()
+    {
+        charaController = GameObject.FindGameObjectWithTag("Chara").GetComponent<CharaController>();
+    }
     // Start is called before the first frame update
-   
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "chara")
@@ -31,7 +35,6 @@ public class GoalCheker : MonoBehaviour
             charaController.notGoal = false;
             gameInfo.SetActive(false);
             endAnim.SetTrigger("StartCutOut");
-            charaAnim.SetFloat("Speed",0.2f);
         }
     }
 }
