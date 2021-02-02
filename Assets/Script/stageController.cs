@@ -35,7 +35,21 @@ public class stageController : MonoBehaviour
         charahitToWall = false;
         isCharaHitToIn = true;
         blockMoveFlag = false;
-        if (isEditMode==false)
+        if (isEditMode)
+        {
+            var tempBlock = (GameObject)Resources.Load("PositionBlock");
+            for(var vertical = 0; vertical < verticalSize; vertical++)
+            {
+                for(var horizon = 0; horizon < horizonSize; horizon++)
+                {
+                    var positionBlock=Instantiate(tempBlock);
+                    positionBlock.transform.parent = this.transform.Find("block");
+                    positionBlock.transform.localPosition = new Vector3(vertical, -0.8f, horizon);
+                    positionBlock.transform.localScale = new Vector3(1, 1, 1);
+                }
+            }
+        }
+        else
         {
             StageInitialize();
             PrepareReturn();
@@ -61,7 +75,7 @@ public class stageController : MonoBehaviour
             //
             if (DoseStop() && charahitToWall)
             {
-                charaController.MoveParentToBlock(gameBlockPosition[0]);
+                chara.transform.parent = this.transform.Find("block");
                 charahitToWall = false;
                 blockMoveFlag = false;
                 if (direction == 1)
@@ -353,6 +367,7 @@ public class stageController : MonoBehaviour
         animator.SetTrigger("SetMove");
         if (isCharaHitToIn)
         {
+            //初回のEnterが子リジョンしてない
             charaController.charaExitBlockPosition = gameBlockPosition[charaEnterBlock].transform.localPosition;
             var rig = chara.GetComponent<Rigidbody>();
             rig.drag = 1;

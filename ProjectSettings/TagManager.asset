@@ -5,11 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - block
-  - BlockPosition
   - wall
   - Stage
   - Chara
   - ButtonController
+  - PositionBlock
+  - EditBlock
+  - BaseEditBlock
   layers:
   - Default
   - TransparentFX

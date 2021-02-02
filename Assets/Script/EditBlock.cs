@@ -1,44 +1,85 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EditBlock : MonoBehaviour, IPointerClickHandler, IDragHandler, IBeginDragHandler, IEndDragHandler, IDropHandler
+public class EditBlock : MonoBehaviour, IInitializePotentialDragHandler, IPointerClickHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    private GameObject blockH;
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        
-    }
+    private GameObject block;
+    private bool DoseMoveEditBlock = false;
+    private bool isHitEditBlock = false;
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        this.transform.Rotate(0, 90, 0);
+        if (!DoseMoveEditBlock)
+        {
+            this.transform.Rotate(0, 90, 0);
+        }
+        DoseMoveEditBlock = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-       blockH.transform.position= Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y));
+        block.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y - 3));
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        blockH = (GameObject)Instantiate(this.gameObject, this.transform.position, this.transform.rotation);
+        DoseMoveEditBlock = true;
+        if (isHitEditBlock)
+        {
+            block = this.gameObject;
+            block.transform.parent = null;
+        }
+        else
+        {
+            block = (GameObject)Instantiate(this.gameObject, this.transform.position, this.transform.rotation);
+        }
+        block.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
+        block.tag = "Untagged";
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Destroy(blockH);
-        Debug.Log("end");
+        isHitEditBlock = false;
+        var isHitPositionBlock = false;
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        foreach (var hit in Physics.RaycastAll(ray))
+        {
+            var hitBlock = hit.collider.gameObject;
+            if (hitBlock.CompareTag("EditBlock"))
+            {
+                Destroy(hitBlock);
+            }
+            else if (hitBlock.CompareTag("PositionBlock"))
+            {
+                block.transform.parent = hitBlock.transform.parent;
+                var position = new Vector3(hitBlock.transform.localPosition.x, 0, hitBlock.transform.localPosition.z);
+                block.transform.localPosition = position;
+                block.transform.localScale = new Vector3(1, 1, 1);
+                isHitPositionBlock = true;
+            }
+        }
+        if (isHitPositionBlock)
+        {
+            block.tag = "EditBlock";
+        }
+        else
+        {
+            Destroy(block);
+        }
+        block = null;
     }
 
-    public void OnDrop(PointerEventData eventData)
+    public void OnInitializePotentialDrag(PointerEventData eventData)
     {
-        Debug.Log("s");
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        foreach (var hit in Physics.RaycastAll(ray))
+        {
+            var hitBlock = hit.collider.gameObject;
+            if (hitBlock.CompareTag("EditBlock"))
+            {
+                isHitEditBlock = true;
+                break;
+            }
+        }
     }
 }

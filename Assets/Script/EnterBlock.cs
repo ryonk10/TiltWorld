@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnterBlock : MonoBehaviour
 {
@@ -11,11 +9,15 @@ public class EnterBlock : MonoBehaviour
     {
         stageCon = GameObject.FindGameObjectWithTag("Stage").GetComponent<stageController>();
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name == "chara")
         {
-            stageCon.charaEnterBlock =int.Parse(this.name);
+            if (int.TryParse(this.name, out var number))
+            {
+                stageCon.charaEnterBlock = number;
+            }
         }
     }
 
@@ -23,7 +25,10 @@ public class EnterBlock : MonoBehaviour
     {
         if (collision.gameObject.name == "chara")
         {
-            stageCon.charaExitBlock = int.Parse(this.name);
+            if (int.TryParse(this.name, out var number))
+            {
+                stageCon.charaExitBlock = number;
+            }
         }
     }
 }
