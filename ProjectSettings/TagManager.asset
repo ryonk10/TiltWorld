@@ -14,6 +14,7 @@ TagManager:
   - BaseEditBlock
   - EditChara
   - EditController
+  - PositionGoal
   layers:
   - Default
   - TransparentFX

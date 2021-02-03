@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;
 
 public class EnterBlock : MonoBehaviour
 {
@@ -14,7 +15,8 @@ public class EnterBlock : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Chara"))
         {
-            if (int.TryParse(this.name, out var number))
+            var numberStr = this.name.Replace('F', ' ');
+            if (int.TryParse(numberStr, out var number))
             {
                 stageCon.charaEnterBlock = number;
             }
@@ -25,7 +27,8 @@ public class EnterBlock : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Chara"))
         {
-            if (int.TryParse(this.name, out var number))
+            var numberStr = this.name.Replace('F', ' ');
+            if (int.TryParse(numberStr, out var number))
             {
                 stageCon.charaExitBlock = number;
             }

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class stageController : MonoBehaviour
 {
@@ -24,10 +22,11 @@ public class stageController : MonoBehaviour
     private CharaController charaController;
     private Vector3[,] baseBlockPosition;
     private Vector3[] destination;
+
     //-1=空白　-2=固定ブロック
     private int[,] isBlockExit;
-    private Animator animator;
 
+    private Animator animator;
 
     // Start is called before the first frame update
     private void Start()
@@ -35,6 +34,7 @@ public class stageController : MonoBehaviour
         if (isEditMode)
         {
             CreatePositonBlock();
+            CreatePositionGloal();
         }
         else
         {
@@ -67,7 +67,7 @@ public class stageController : MonoBehaviour
                 if (direction == 1)
                 {
                     iTween.RotateTo(this.gameObject, iTween.Hash("x", 0f,
-                        "oncompletetarget",this.gameObject,
+                        "oncompletetarget", this.gameObject,
                 "oncomplete", "MoveCharaToDefaltPosition"));
                 }
                 else if (direction == 2)
@@ -85,7 +85,7 @@ public class stageController : MonoBehaviour
                 else if (direction == 4)
                 {
                     iTween.RotateTo(this.gameObject, iTween.Hash("z", 0f,
-                        "oncompletetarget",this.gameObject,
+                        "oncompletetarget", this.gameObject,
                 "oncomplete", "MoveCharaToDefaltPosition"));
                 }
             }
@@ -101,9 +101,34 @@ public class stageController : MonoBehaviour
             {
                 var positionBlock = Instantiate(tempBlock);
                 positionBlock.transform.parent = this.transform.Find("block");
-                positionBlock.transform.localPosition = new Vector3(vertical, -0.8f, horizon);
+                positionBlock.transform.localPosition = new Vector3(horizon, -0.8f, vertical);
                 positionBlock.transform.localScale = new Vector3(1, 1, 1);
             }
+        }
+    }
+
+    public void CreatePositionGloal()
+    {
+        var tempBlock = (GameObject)Resources.Load("PositionBlock");
+        tempBlock.tag = "PositionGoal";
+        var parent = this.transform.Find("Wall");
+        for (var vertical = -1; vertical < verticalSize-1; vertical++)
+        {
+            var positionGoalL = Instantiate(tempBlock, parent);
+            positionGoalL.transform.localPosition = new Vector3(-2, -0.8f, vertical);
+            positionGoalL.transform.localScale = new Vector3(1, 1, 1);
+            var positionGoalR = Instantiate(tempBlock, parent);
+            positionGoalR.transform.localPosition = new Vector3(horizonSize-1, -0.8f, vertical);
+            positionGoalR.transform.localScale = new Vector3(1, 1, 1);
+        }
+        for (var horizon = -1; horizon < horizonSize-1; horizon++)
+        {
+            var positionGoalL = Instantiate(tempBlock, parent);
+            positionGoalL.transform.localPosition = new Vector3(horizon, -0.8f,-2);
+            positionGoalL.transform.localScale = new Vector3(1, 1, 1);
+            var positionGoalR = Instantiate(tempBlock, parent);
+            positionGoalR.transform.localPosition = new Vector3(horizon, -0.8f,verticalSize-1);
+            positionGoalR.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 
@@ -141,7 +166,7 @@ public class stageController : MonoBehaviour
             var index = (int)(block.transform.localPosition.z * horizonSize + block.transform.localPosition.x);
             if (block.gameObject.name.Contains("F"))
             {
-                block.gameObject.name = index.ToString();
+                block.gameObject.name = index.ToString() + "F";
                 isBlockExit[index / horizonSize, index % horizonSize] = -2;
                 continue;
             }
@@ -340,7 +365,7 @@ public class stageController : MonoBehaviour
             }
             retrunIsExi[i / horizonSize, i % horizonSize] = isBlockExit[i / horizonSize, i % horizonSize];
         }
-        var tempRetrunGmaeClass = new ReturnGameClass(returnPosi,charaController.GetReturnCharaPosition(), retrunIsExi);
+        var tempRetrunGmaeClass = new ReturnGameClass(returnPosi, charaController.GetReturnCharaPosition(), retrunIsExi);
         returnGameClass.Add(tempRetrunGmaeClass);
     }
 
@@ -408,7 +433,8 @@ public class stageController : MonoBehaviour
         public Vector3[] retrunGameBlockPosition { get; set; }
         public Vector3 returnCharaPosition { get; set; }
         public int[,] returnIsExitBlock { get; set; }
-        public ReturnGameClass(Vector3[] retrunPosi,Vector3 returnCharaPosi, int[,] isExblo)
+
+        public ReturnGameClass(Vector3[] retrunPosi, Vector3 returnCharaPosi, int[,] isExblo)
         {
             this.retrunGameBlockPosition = retrunPosi;
             this.returnCharaPosition = returnCharaPosi;
