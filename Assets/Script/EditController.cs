@@ -85,7 +85,6 @@ public class EditController : MonoBehaviour
             block.GetComponent<EnterBlock>().enabled = true;
             block.tag = "block";
         }
-        goal.SetActive(false);
         Destroy(chara.GetComponent<EditChara>());
         chara.tag = "Chara";
         Destroy(goal.GetComponent<EditGoal>());
