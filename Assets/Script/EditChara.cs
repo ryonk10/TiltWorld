@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EditChara : MonoBehaviour,IDragHandler,IEndDragHandler
+public class EditChara : MonoBehaviour,IBeginDragHandler, IDragHandler,IEndDragHandler
 {
-    private Vector3 defaultPosi;
-    // Start is called before the first frame update
-    void Start()
+    private EditController editController;
+    private void Start()
     {
-        defaultPosi = this.transform.position;
+        editController = GameObject.FindGameObjectWithTag("EditController").GetComponent<EditController>();
+    }
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        this.transform.parent = null;
+        this.transform.localScale = editController.editCharaScale;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void OnDrag(PointerEventData eventData)
     {
-        this.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y - 3));
+        this.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y - 5));
     }
     public void OnEndDrag(PointerEventData eventData)
     {
@@ -31,18 +30,15 @@ public class EditChara : MonoBehaviour,IDragHandler,IEndDragHandler
             if (hitBlock.CompareTag("PositionBlock"))
             {
                 this.transform.parent = hitBlock.transform.parent;
-                var position = new Vector3(hitBlock.transform.localPosition.x, 0.72f, hitBlock.transform.localPosition.z);
+                var position = new Vector3(hitBlock.transform.localPosition.x, 0.75f, hitBlock.transform.localPosition.z);
                 this.transform.localPosition = position;
                 this.transform.localScale = new Vector3(0.002f, 0.002f, 0.002f);
-                var rig = this.GetComponent<Rigidbody>();
-                rig.useGravity = true;
-                rig.drag = 1;
                 isHitPositionBlock = true;
             }
         }
         if (!isHitPositionBlock)
         {
-            this.transform.position = defaultPosi;
+            this.transform.position = editController.editCharaPosi;
         }
     }
 }

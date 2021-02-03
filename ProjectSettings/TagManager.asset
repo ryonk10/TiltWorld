@@ -12,6 +12,8 @@ TagManager:
   - PositionBlock
   - EditBlock
   - BaseEditBlock
+  - EditChara
+  - EditController
   layers:
   - Default
   - TransparentFX

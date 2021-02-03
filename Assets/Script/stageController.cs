@@ -32,27 +32,13 @@ public class stageController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        charahitToWall = false;
-        isCharaHitToIn = true;
-        blockMoveFlag = false;
         if (isEditMode)
         {
-            var tempBlock = (GameObject)Resources.Load("PositionBlock");
-            for(var vertical = 0; vertical < verticalSize; vertical++)
-            {
-                for(var horizon = 0; horizon < horizonSize; horizon++)
-                {
-                    var positionBlock=Instantiate(tempBlock);
-                    positionBlock.transform.parent = this.transform.Find("block");
-                    positionBlock.transform.localPosition = new Vector3(vertical, -0.8f, horizon);
-                    positionBlock.transform.localScale = new Vector3(1, 1, 1);
-                }
-            }
+            CreatePositonBlock();
         }
         else
         {
             StageInitialize();
-            PrepareReturn();
         }
     }
 
@@ -106,9 +92,28 @@ public class stageController : MonoBehaviour
         }
     }
 
+    public void CreatePositonBlock()
+    {
+        var tempBlock = (GameObject)Resources.Load("PositionBlock");
+        for (var vertical = 0; vertical < verticalSize; vertical++)
+        {
+            for (var horizon = 0; horizon < horizonSize; horizon++)
+            {
+                var positionBlock = Instantiate(tempBlock);
+                positionBlock.transform.parent = this.transform.Find("block");
+                positionBlock.transform.localPosition = new Vector3(vertical, -0.8f, horizon);
+                positionBlock.transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
+    }
+
     public void StageInitialize()
     {
-        chara = GameObject.FindGameObjectWithTag("Chara");
+        charahitToWall = false;
+        isCharaHitToIn = true;
+        blockMoveFlag = false;
+        chara = GameObject.FindGameObjectWithTag("EditChara");
+        chara.tag = "Chara";
         charaController = chara.GetComponent<CharaController>();
         buttonController = GameObject.FindGameObjectWithTag("ButtonController").GetComponent<ButtonController>();
         animator = GetComponent<Animator>();
@@ -148,6 +153,9 @@ public class stageController : MonoBehaviour
                 isBlockExit[index / horizonSize, index % horizonSize] = index;
             }
         }
+        chara.GetComponent<Rigidbody>().useGravity = true;
+        chara.GetComponent<Rigidbody>().drag = 1;
+        PrepareReturn();
     }
 
     public void StageTilt(string direction)

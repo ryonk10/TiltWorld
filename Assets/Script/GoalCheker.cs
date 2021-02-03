@@ -24,7 +24,7 @@ public class GoalCheker : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "chara")
+        if (other.gameObject.CompareTag("Chara"))
         {
             mainCamera.enabled = false;
             subCamera.enabled = true;

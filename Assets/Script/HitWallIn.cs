@@ -13,7 +13,7 @@ public class HitWallIn : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "chara")
+        if (collision.gameObject.CompareTag("Chara"))
         {
             stageCon.isCharaHitToIn = true;
             stageCon.charahitToWall = true;

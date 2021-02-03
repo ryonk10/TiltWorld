@@ -12,7 +12,7 @@ public class EnterBlock : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "chara")
+        if (collision.gameObject.CompareTag("Chara"))
         {
             if (int.TryParse(this.name, out var number))
             {
@@ -23,7 +23,7 @@ public class EnterBlock : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.name == "chara")
+        if (collision.gameObject.CompareTag("Chara"))
         {
             if (int.TryParse(this.name, out var number))
             {
