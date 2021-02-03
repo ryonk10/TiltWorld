@@ -79,6 +79,7 @@ public class EditController : MonoBehaviour
         canvas.SetActive(true);
         playButton.interactable = false;
         editButton.interactable = true;
+        stageCon.isEditMode = false;
         stageCon.StageInitialize();
     }
 
@@ -104,6 +105,7 @@ public class EditController : MonoBehaviour
             block.GetComponent<EnterBlock>().enabled = false;
             block.tag = "EditBlock";
         }
+        stageCon.isEditMode = true;
     }
 
     private bool IsCharaOnBlock()
