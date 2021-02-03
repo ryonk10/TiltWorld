@@ -95,12 +95,13 @@ public class stageController : MonoBehaviour
     public void CreatePositonBlock()
     {
         var tempBlock = (GameObject)Resources.Load("PositionBlock");
+        tempBlock.tag = "PositionBlock";
+        var parent = this.transform.Find("block");
         for (var vertical = 0; vertical < verticalSize; vertical++)
         {
             for (var horizon = 0; horizon < horizonSize; horizon++)
             {
-                var positionBlock = Instantiate(tempBlock);
-                positionBlock.transform.parent = this.transform.Find("block");
+                var positionBlock = Instantiate(tempBlock,parent);
                 positionBlock.transform.localPosition = new Vector3(horizon, -0.8f, vertical);
                 positionBlock.transform.localScale = new Vector3(1, 1, 1);
             }
@@ -137,8 +138,7 @@ public class stageController : MonoBehaviour
         charahitToWall = false;
         isCharaHitToIn = true;
         blockMoveFlag = false;
-        chara = GameObject.FindGameObjectWithTag("EditChara");
-        chara.tag = "Chara";
+        chara = GameObject.FindGameObjectWithTag("Chara");
         charaController = chara.GetComponent<CharaController>();
         buttonController = GameObject.FindGameObjectWithTag("ButtonController").GetComponent<ButtonController>();
         animator = GetComponent<Animator>();

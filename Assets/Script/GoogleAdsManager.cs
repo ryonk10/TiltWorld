@@ -49,6 +49,7 @@ public class GoogleAdsManager : MonoBehaviour
         interstitial.Destroy();
         RequestInterstitial();
         isAdsClosed = true;
+        onClosed.Invoke();
     }
 
     public void FullAdsShow()

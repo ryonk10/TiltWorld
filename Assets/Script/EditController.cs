@@ -85,7 +85,9 @@ public class EditController : MonoBehaviour
             block.GetComponent<EnterBlock>().enabled = true;
             block.tag = "block";
         }
+        goal.SetActive(false);
         Destroy(chara.GetComponent<EditChara>());
+        chara.tag = "Chara";
         Destroy(goal.GetComponent<EditGoal>());
         canvas.SetActive(true);
         playButton.interactable = false;
@@ -98,6 +100,7 @@ public class EditController : MonoBehaviour
     {
         playButton.interactable = true;
         editButton.interactable = false;
+        goal.SetActive(true);
         canvas.SetActive(false);
         chara.GetComponent<Rigidbody>().useGravity = false;
         chara.AddComponent<EditChara>();
