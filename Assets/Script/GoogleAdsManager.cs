@@ -7,9 +7,8 @@ using UnityEngine.Events;
 
 public class GoogleAdsManager : MonoBehaviour
 {
-    public UnityEvent onOpened;
     public UnityEvent onClosed;
-    public bool isAdsClosed { get; set; } = false;
+    public bool isTest;
 
     private InterstitialAd interstitial;
 
@@ -29,7 +28,6 @@ public class GoogleAdsManager : MonoBehaviour
         // Initialize an InterstitialAd.
         this.interstitial = new InterstitialAd(adUnitId);
         // Called when an ad is shown.
-        this.interstitial.OnAdOpening += HandleOnAdOpened;
         // Called when the ad is closed.
         this.interstitial.OnAdClosed += HandleOnAdClosed;
 
@@ -39,27 +37,27 @@ public class GoogleAdsManager : MonoBehaviour
         this.interstitial.LoadAd(request);
     }
 
-    public void HandleOnAdOpened(object sender, EventArgs args)
-    {
-        
-    }
-
     public void HandleOnAdClosed(object sender, EventArgs args)
     {
         interstitial.Destroy();
         RequestInterstitial();
-        isAdsClosed = true;
         onClosed.Invoke();
     }
 
     public void FullAdsShow()
     {
+        if (isTest)
+        {
+            onClosed.Invoke();
+            return;
+        }
         if (this.interstitial.IsLoaded())
         {
-            isAdsClosed = false;
             this.interstitial.Show();
         }
         else
-            isAdsClosed = true;
+        {
+            onClosed.Invoke();
+        }
     }
 }

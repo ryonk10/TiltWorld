@@ -15,6 +15,7 @@ public class GameSceneManager : MonoBehaviour
 
     public void NextSceneStart()
     {
+        if(scene!=null)
         scene.allowSceneActivation = true;
     }
 }

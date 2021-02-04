@@ -4,38 +4,39 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EndEvet: MonoBehaviour
-{
-    public GameSceneManager gameSceneManager;
-    public GoogleAdsManager googleAdsManager;
+{ 
     public GameObject endCanvas;
     public Animator anim;
+    public Camera subCamera;
+    public GameObject quad2;
+    public GameObject text;
+    public GameObject clearForm;
+    public GameObject button;
+    public GameObject gameInfo;
+    public Animator endAnim;
 
-    // Start is called before the first frame update
-
-    private void Update()
+    public void OnGoal()
     {
-        if (1 <= anim.GetCurrentAnimatorStateInfo(0).normalizedTime)
-        {
-            End();
-        }
+        Camera.main.enabled = false;
+        subCamera.enabled = true;
+        text.SetActive(true);
+        button.SetActive(false);
+        clearForm.SetActive(true);
+        quad2.SetActive(false);
+        GameObject.FindGameObjectWithTag("Chara").GetComponent<CharaController>().notGoal = false;
+        gameInfo.SetActive(false);
+        endAnim.SetTrigger("StartCutOut");
+        StartCoroutine(ShowEndCanvas());
+
     }
-    public void End()
-    {
-        endCanvas.SetActive(true);
-    }
 
-    public void ReStartGame()
+    private IEnumerator ShowEndCanvas()
     {
-        gameSceneManager.NextSceneLoad("Tutorial");
-        StartCoroutine(CheckCLosedAds());
-    }
-
-    IEnumerator CheckCLosedAds()
-    {
-        while (googleAdsManager.isAdsClosed == false)
+        yield return null;
+        while(!anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             yield return null;
         }
-        gameSceneManager.NextSceneStart();
+        endCanvas.SetActive(true);
     }
 }

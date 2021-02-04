@@ -39,7 +39,7 @@ public class CharaController : MonoBehaviour
         }
         else if (notGoal == false)
         {
-            float step = 5 * Time.deltaTime;
+            float step = 10* Time.deltaTime;
             this.rigi.velocity = new Vector3(1, 0, 5)*step;
         }
     }

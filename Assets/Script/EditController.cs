@@ -155,4 +155,10 @@ public class EditController : MonoBehaviour
         chara.GetComponent<CharaController>().notGoal = true;
         goalInfo.SetActive(false);
     }
+
+    public void OnGoal()
+    {
+        chara.GetComponent<CharaController>().notGoal = false;
+        goalInfo.SetActive(true);
+    }
 }

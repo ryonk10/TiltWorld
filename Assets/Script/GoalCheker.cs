@@ -1,40 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class GoalCheker : MonoBehaviour
 {
-    public Camera mainCamera;
-    public Camera subCamera;
-    public GameObject quad2;
-    public GameObject text;
-    public GameObject clearForm;
-    public GameObject button;
-    public GameObject gameInfo;
-    public Animator endAnim;
-
-    private CharaController charaController;
-
-    private void Start()
-    {
-        charaController = GameObject.FindGameObjectWithTag("Chara").GetComponent<CharaController>();
-    }
-    // Start is called before the first frame update
+    public UnityEvent OnGoal;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Chara"))
         {
-            mainCamera.enabled = false;
-            subCamera.enabled = true;
-            text.SetActive(true);
-            button.SetActive(false);
-            clearForm.SetActive(true);
-            quad2.SetActive(false);
-            charaController.notGoal = false;
-            gameInfo.SetActive(false);
-            endAnim.SetTrigger("StartCutOut");
+            OnGoal.Invoke();
         }
     }
 }
