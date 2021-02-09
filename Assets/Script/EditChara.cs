@@ -1,15 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EditChara : MonoBehaviour,IBeginDragHandler, IDragHandler,IEndDragHandler
+public class EditChara : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private EditController editController;
+
     private void Start()
     {
         editController = GameObject.FindGameObjectWithTag("EditController").GetComponent<EditController>();
     }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         this.transform.parent = null;
@@ -18,12 +18,20 @@ public class EditChara : MonoBehaviour,IBeginDragHandler, IDragHandler,IEndDragH
 
     public void OnDrag(PointerEventData eventData)
     {
-        this.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.touches[0].position.x, Input.touches[0].position.y, Camera.main.transform.position.y - 5));
+        if (Application.isEditor)
+            this.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y - 5));
+        else
+            this.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.touches[0].position.x, Input.touches[0].position.y, Camera.main.transform.position.y - 5));
     }
+
     public void OnEndDrag(PointerEventData eventData)
     {
         var isHitPositionBlock = false;
-        var ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
+        Ray ray;
+        if (Application.isEditor)
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        else
+            ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
         foreach (var hit in Physics.RaycastAll(ray))
         {
             var hitBlock = hit.collider.gameObject;

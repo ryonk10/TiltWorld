@@ -8,7 +8,6 @@ using UnityEngine.Events;
 public class GoogleAdsManager : MonoBehaviour
 {
     public UnityEvent onClosed;
-    public bool isTest;
 
     private InterstitialAd interstitial;
 
@@ -46,7 +45,7 @@ public class GoogleAdsManager : MonoBehaviour
 
     public void FullAdsShow()
     {
-        if (isTest)
+        if (Application.isEditor)
         {
             onClosed.Invoke();
             return;

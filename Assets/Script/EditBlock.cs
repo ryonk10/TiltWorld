@@ -18,7 +18,10 @@ public class EditBlock : MonoBehaviour, IInitializePotentialDragHandler, IPointe
 
     public void OnDrag(PointerEventData eventData)
     {
-        block.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.touches[0].position.x, Input.touches[0].position.y, Camera.main.transform.position.y - 3));
+        if (Application.isEditor)
+            block.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y - 3));
+        else
+            block.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.touches[0].position.x, Input.touches[0].position.y, Camera.main.transform.position.y - 3));
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -41,7 +44,11 @@ public class EditBlock : MonoBehaviour, IInitializePotentialDragHandler, IPointe
     {
         isHitEditBlock = false;
         var isHitPositionBlock = false;
-        var ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
+        Ray ray;
+        if (Application.isEditor)
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        else
+            ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
         foreach (var hit in Physics.RaycastAll(ray))
         {
             var hitBlock = hit.collider.gameObject;
@@ -71,7 +78,11 @@ public class EditBlock : MonoBehaviour, IInitializePotentialDragHandler, IPointe
 
     public void OnInitializePotentialDrag(PointerEventData eventData)
     {
-        var ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
+        Ray ray;
+        if (Application.isEditor)
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        else
+            ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
         foreach (var hit in Physics.RaycastAll(ray))
         {
             var hitBlock = hit.collider.gameObject;
