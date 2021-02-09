@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharaController : MonoBehaviour
 {
     public float walkSpeed;
     public Vector3 charaExitBlockPosition { get; set; }
-    public bool doseStageReturn { get; set; }
-    public bool notGoal { get; set; }
 
     private ButtonController buttonController;
+    private stageController stageCon;
     private Vector3 charaDefaltPosition;
     private Rigidbody rigi;
 
@@ -16,31 +14,29 @@ public class CharaController : MonoBehaviour
     private void Start()
     {
         buttonController = GameObject.FindGameObjectWithTag("ButtonController").GetComponent<ButtonController>();
-        doseStageReturn = false;
-        notGoal = true;
+        stageCon = GameObject.FindGameObjectWithTag("Stage").GetComponent<stageController>();
         rigi = this.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (doseStageReturn&&notGoal)
+        if (stageCon.stageFaze == stageController.StageFaze.CHARA_MOVE_DEFAULT)
         {
             float step = walkSpeed * Time.deltaTime;
             charaDefaltPosition = new Vector3(charaExitBlockPosition.x, this.transform.localPosition.y, charaExitBlockPosition.z);
             this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, charaDefaltPosition, step);
-            if ((charaDefaltPosition.x==this.transform.localPosition.x) 
-                && (charaDefaltPosition.z==this.transform.localPosition.z))
+            if ((charaDefaltPosition.x == this.transform.localPosition.x)
+                && (charaDefaltPosition.z == this.transform.localPosition.z))
             {
-                doseStageReturn = false;
-               
+                stageCon.stageFaze = stageController.StageFaze.IDLE;
                 buttonController.ChangeInteractableToTrue();
             }
         }
-        else if (notGoal == false)
+        else if (stageCon.stageFaze == stageController.StageFaze.GOAL)
         {
-            float step = 10* Time.deltaTime;
-            this.rigi.velocity = new Vector3(1, 0, 5)*step;
+            float step = 10 * Time.deltaTime;
+            this.rigi.velocity = new Vector3(1, 0, 5) * step;
         }
     }
 

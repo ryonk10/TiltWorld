@@ -1,17 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ButtonController : MonoBehaviour
 {
-    public Button up, down, left, right,reSet,reTrun;
+    public Button up, down, left, right, reSet, reTrun;
 
     private stageController stageCon;
+
     private void Start()
     {
         stageCon = GameObject.FindGameObjectWithTag("Stage").GetComponent<stageController>();
     }
+
     // Start is called before the first frame update
     public void ChageInteractableToFalse(string direction)
     {

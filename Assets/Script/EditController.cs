@@ -31,12 +31,7 @@ public class EditController : MonoBehaviour
 
     private void Update()
     {
-        if (stageCon.blockMoveFlag)
-        {
-            playButton.interactable = false;
-            editButton.interactable = false;
-        }
-        else
+        if (stageCon.stageFaze == stageController.StageFaze.IDLE)
         {
             if (stageCon.isEditMode)
             {
@@ -48,6 +43,11 @@ public class EditController : MonoBehaviour
                 playButton.interactable = false;
                 editButton.interactable = true;
             }
+        }
+        else
+        {
+            playButton.interactable = false;
+            editButton.interactable = false;
         }
     }
 
@@ -71,7 +71,7 @@ public class EditController : MonoBehaviour
             Destroy(block);
         }
         var positionGoals = GameObject.FindGameObjectsWithTag("PositionGoal");
-        foreach(var block in positionGoals)
+        foreach (var block in positionGoals)
         {
             Destroy(block);
         }
@@ -152,13 +152,13 @@ public class EditController : MonoBehaviour
 
     public void GoalOK()
     {
-        chara.GetComponent<CharaController>().notGoal = true;
+        stageCon.stageFaze = stageController.StageFaze.IDLE;
         goalInfo.SetActive(false);
     }
 
     public void OnGoal()
     {
-        chara.GetComponent<CharaController>().notGoal = false;
+        stageCon.stageFaze = stageController.StageFaze.GOAL;
         goalInfo.SetActive(true);
     }
 }

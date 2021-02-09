@@ -9,12 +9,13 @@ public class stageController : MonoBehaviour
     public int verticalSize;
     public int horizonSize;
     public bool isEditMode;
+
+    public StageFaze stageFaze { get; set; }
     public int charaEnterBlock { get; set; }
     public int charaExitBlock { get; set; }
     public int direction { get; set; }
     public bool charahitToWall { get; set; }
     public bool isCharaHitToIn { get; set; }
-    public bool blockMoveFlag { get; set; }
 
     private GameObject[] gameBlockPosition;
     private GameObject chara;
@@ -28,9 +29,21 @@ public class stageController : MonoBehaviour
 
     private Animator animator;
 
+    public enum StageFaze
+    {
+        IDLE,
+        PREPARE_TILT,
+        STAGE_TILT,
+        BLOCK_MOVE,
+        STAGE_RETURN,
+        CHARA_MOVE_DEFAULT,
+        GOAL
+    }
+
     // Start is called before the first frame update
     private void Start()
     {
+        stageFaze = StageFaze.IDLE;
         if (isEditMode)
         {
             CreatePositonBlock();
@@ -45,7 +58,7 @@ public class stageController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (blockMoveFlag)
+        if (stageFaze == StageFaze.BLOCK_MOVE)
         {
             //ブロック移動
             float step = speed * Time.deltaTime;
@@ -61,32 +74,32 @@ public class stageController : MonoBehaviour
             //
             if (DoseStop() && charahitToWall)
             {
+                stageFaze = StageFaze.STAGE_RETURN;
                 chara.transform.parent = this.transform.Find("block");
                 charahitToWall = false;
-                blockMoveFlag = false;
                 if (direction == 1)
                 {
                     iTween.RotateTo(this.gameObject, iTween.Hash("x", 0f,
                         "oncompletetarget", this.gameObject,
-                "oncomplete", "MoveCharaToDefaltPosition"));
+                "oncomplete", "ToFazeCHARA_MOVE_DEFAULT"));
                 }
                 else if (direction == 2)
                 {
                     iTween.RotateTo(this.gameObject, iTween.Hash("x", 0f,
                         "oncompletetarget", this.gameObject,
-                "oncomplete", "MoveCharaToDefaltPosition"));
+                "oncomplete", "ToFazeCHARA_MOVE_DEFAULT"));
                 }
                 else if (direction == 3)
                 {
                     iTween.RotateTo(this.gameObject, iTween.Hash("z", 0f,
                         "oncompletetarget", this.gameObject,
-                "oncomplete", "MoveCharaToDefaltPosition"));
+                "oncomplete", "ToFazeCHARA_MOVE_DEFAULT"));
                 }
                 else if (direction == 4)
                 {
                     iTween.RotateTo(this.gameObject, iTween.Hash("z", 0f,
                         "oncompletetarget", this.gameObject,
-                "oncomplete", "MoveCharaToDefaltPosition"));
+                "oncomplete", "ToFazeCHARA_MOVE_DEFAULT"));
                 }
             }
         }
@@ -101,7 +114,7 @@ public class stageController : MonoBehaviour
         {
             for (var horizon = 0; horizon < horizonSize; horizon++)
             {
-                var positionBlock = Instantiate(tempBlock,parent);
+                var positionBlock = Instantiate(tempBlock, parent);
                 positionBlock.transform.localPosition = new Vector3(horizon, -0.8f, vertical);
                 positionBlock.transform.localScale = new Vector3(1, 1, 1);
             }
@@ -113,22 +126,22 @@ public class stageController : MonoBehaviour
         var tempBlock = (GameObject)Resources.Load("PositionBlock");
         tempBlock.tag = "PositionGoal";
         var parent = this.transform.Find("Wall");
-        for (var vertical = -1; vertical < verticalSize-1; vertical++)
+        for (var vertical = -1; vertical < verticalSize - 1; vertical++)
         {
             var positionGoalL = Instantiate(tempBlock, parent);
             positionGoalL.transform.localPosition = new Vector3(-2, -0.8f, vertical);
             positionGoalL.transform.localScale = new Vector3(1, 1, 1);
             var positionGoalR = Instantiate(tempBlock, parent);
-            positionGoalR.transform.localPosition = new Vector3(horizonSize-1, -0.8f, vertical);
+            positionGoalR.transform.localPosition = new Vector3(horizonSize - 1, -0.8f, vertical);
             positionGoalR.transform.localScale = new Vector3(1, 1, 1);
         }
-        for (var horizon = -1; horizon < horizonSize-1; horizon++)
+        for (var horizon = -1; horizon < horizonSize - 1; horizon++)
         {
             var positionGoalL = Instantiate(tempBlock, parent);
-            positionGoalL.transform.localPosition = new Vector3(horizon, -0.8f,-2);
+            positionGoalL.transform.localPosition = new Vector3(horizon, -0.8f, -2);
             positionGoalL.transform.localScale = new Vector3(1, 1, 1);
             var positionGoalR = Instantiate(tempBlock, parent);
-            positionGoalR.transform.localPosition = new Vector3(horizon, -0.8f,verticalSize-1);
+            positionGoalR.transform.localPosition = new Vector3(horizon, -0.8f, verticalSize - 1);
             positionGoalR.transform.localScale = new Vector3(1, 1, 1);
         }
     }
@@ -137,7 +150,7 @@ public class stageController : MonoBehaviour
     {
         charahitToWall = false;
         isCharaHitToIn = true;
-        blockMoveFlag = false;
+        stageFaze = StageFaze.IDLE;
         chara = GameObject.FindGameObjectWithTag("Chara");
         charaController = chara.GetComponent<CharaController>();
         buttonController = GameObject.FindGameObjectWithTag("ButtonController").GetComponent<ButtonController>();
@@ -186,6 +199,7 @@ public class stageController : MonoBehaviour
     public void StageTilt(string direction)
     {
         PrepareReturn();
+        stageFaze = StageFaze.PREPARE_TILT;
         animator.SetTrigger("SetIdle");
         if (direction == "u")
         {
@@ -223,7 +237,7 @@ public class stageController : MonoBehaviour
             iTween.RotateTo(this.gameObject, iTween.Hash(
                 "x", tiltDigree,
                 "oncompletetarget", this.gameObject,
-                "oncomplete", "SetBlockMoveFlag"));
+                "oncomplete", "ToFazeSTAGE_TILT"));
         }
         else if (direction == "d")
         {
@@ -258,7 +272,7 @@ public class stageController : MonoBehaviour
             iTween.RotateTo(this.gameObject, iTween.Hash(
                 "x", -tiltDigree,
                  "oncompletetarget", this.gameObject,
-                "oncomplete", "SetBlockMoveFlag"));
+                "oncomplete", "ToFazeSTAGE_TILT"));
         }
         else if (direction == "r")
         {
@@ -293,7 +307,7 @@ public class stageController : MonoBehaviour
             iTween.RotateTo(this.gameObject, iTween.Hash(
                 "z", -tiltDigree,
                  "oncompletetarget", this.gameObject,
-                "oncomplete", "SetBlockMoveFlag"));
+                "oncomplete", "ToFazeSTAGE_TILT"));
         }
         else if (direction == "l")
         {
@@ -328,7 +342,7 @@ public class stageController : MonoBehaviour
             iTween.RotateTo(this.gameObject, iTween.Hash(
                 "z", tiltDigree,
                  "oncompletetarget", this.gameObject,
-                "oncomplete", "SetBlockMoveFlag"));
+                "oncomplete", "ToFazeSTAGE_TILT"));
         }
     }
 
@@ -373,7 +387,7 @@ public class stageController : MonoBehaviour
     {
         charahitToWall = false;
         isCharaHitToIn = true;
-        blockMoveFlag = false;
+        stageFaze = StageFaze.IDLE;
         buttonController.ChangeInteractableToTrue();
         this.transform.rotation = Quaternion.Euler(0, this.transform.localRotation.eulerAngles.y, 0);
         var tempReturnGameClass = returnGameClass[backIndex];
@@ -389,14 +403,15 @@ public class stageController : MonoBehaviour
         charaController.ReturnCharaPosition(tempReturnGameClass.returnCharaPosition);
     }
 
-    private void SetBlockMoveFlag()
+    private void ToFazeSTAGE_TILT()
     {
-        blockMoveFlag = true;
+        stageFaze = StageFaze.BLOCK_MOVE;
         buttonController.ResetReturnToTure();
     }
 
-    private void MoveCharaToDefaltPosition()
+    private void ToFazeCHARA_MOVE_DEFAULT()
     {
+        stageFaze = StageFaze.CHARA_MOVE_DEFAULT;
         animator.SetTrigger("SetMove");
         if (isCharaHitToIn)
         {
@@ -409,7 +424,6 @@ public class stageController : MonoBehaviour
         {
             charaController.charaExitBlockPosition = gameBlockPosition[charaExitBlock].transform.localPosition;
         }
-        charaController.doseStageReturn = true;
     }
 
     private bool DoseStop()
