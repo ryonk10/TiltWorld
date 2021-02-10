@@ -185,7 +185,24 @@ public class stageController : MonoBehaviour
             }
             else
             {
-                block.gameObject.name = index.ToString();
+                string type;
+                if (block.gameObject.name.Contains("H"))
+                {
+                    type ="H";
+                }
+                else if (block.gameObject.name.Contains("L"))
+                {
+                    type = "L";
+                }
+                else if (block.gameObject.name.Contains("Obs"))
+                {
+                    type = "Obs";
+                }
+                else
+                {
+                    type = "N";
+                }
+                block.gameObject.name = index.ToString() + type;
                 gameBlockPosition[index] = block;
                 destination[index] = block.transform.localPosition;
                 isBlockExit[index / horizonSize, index % horizonSize] = index;
@@ -193,14 +210,13 @@ public class stageController : MonoBehaviour
         }
         chara.GetComponent<Rigidbody>().useGravity = true;
         chara.GetComponent<Rigidbody>().drag = 1;
-        PrepareReturn();
     }
 
     public void StageTilt(string direction)
     {
+        animator.SetTrigger("SetIdle");
         PrepareReturn();
         stageFaze = StageFaze.PREPARE_TILT;
-        animator.SetTrigger("SetIdle");
         if (direction == "u")
         {
             this.direction = 1;
@@ -354,7 +370,7 @@ public class stageController : MonoBehaviour
 
     public void GameRetrun()
     {
-        var lastIndex = returnGameClass.Count - 1;
+        var lastIndex = returnGameClass.Count-1;
         if (0 < lastIndex)
         {
             GameBack(lastIndex);

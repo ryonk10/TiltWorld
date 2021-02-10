@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class ButtonController : MonoBehaviour
 {
     public Button up, down, left, right, reSet, reTrun;
+    public Text MoveCountText;
 
     private stageController stageCon;
 
@@ -15,6 +16,8 @@ public class ButtonController : MonoBehaviour
     // Start is called before the first frame update
     public void ChageInteractableToFalse(string direction)
     {
+        var moveCount = int.Parse(MoveCountText.text)+1;
+        MoveCountText.text = moveCount.ToString();
         up.interactable = false;
         down.interactable = false;
         right.interactable = false;
@@ -40,11 +43,18 @@ public class ButtonController : MonoBehaviour
 
     public void GameReset()
     {
+        MoveCountText.text = "0";
         stageCon.GameReset();
     }
 
     public void GameReturn()
     {
+        var moveCount = int.Parse(MoveCountText.text)-1;
+        if (moveCount < 0)
+        {
+            moveCount = 0;
+        }
+        MoveCountText.text = moveCount.ToString();
         stageCon.GameRetrun();
     }
 }

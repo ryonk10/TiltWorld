@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
+
     private AsyncOperation scene;
 
     public void NextSceneLoad(string sceneName)
@@ -15,7 +14,8 @@ public class GameSceneManager : MonoBehaviour
 
     public void NextSceneStart()
     {
-        if(scene!=null)
-        scene.allowSceneActivation = true;
+        if (scene != null)
+            scene.allowSceneActivation = true;
     }
+
 }

@@ -34,7 +34,7 @@ public class EditBlock : MonoBehaviour, IInitializePotentialDragHandler, IPointe
         }
         else
         {
-            block = (GameObject)Instantiate(this.gameObject, this.transform.position, this.transform.rotation);
+            block = Instantiate(this.gameObject, this.transform.position, this.transform.rotation);
         }
         block.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
         block.tag = "Untagged";

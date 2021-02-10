@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-using System.Linq;
-
+using System.Text.RegularExpressions;
 public class EnterBlock : MonoBehaviour
 {
     private stageController stageCon;
@@ -15,10 +14,10 @@ public class EnterBlock : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Chara"))
         {
-            var numberStr = this.name.Replace('F', ' ');
-            if (int.TryParse(numberStr, out var number))
+            var numberStr = Regex.Match(this.name, @"^(\d+)");
+            if (numberStr.Success)
             {
-                stageCon.charaEnterBlock = number;
+                stageCon.charaEnterBlock = int.Parse(numberStr.Value);
             }
         }
     }
@@ -27,10 +26,10 @@ public class EnterBlock : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Chara"))
         {
-            var numberStr = this.name.Replace('F', ' ');
-            if (int.TryParse(numberStr, out var number))
+            var numberStr = Regex.Match(this.name, @"^(\d+)");
+            if (numberStr.Success)
             {
-                stageCon.charaExitBlock = number;
+                stageCon.charaExitBlock = int.Parse(numberStr.Value);
             }
         }
     }

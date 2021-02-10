@@ -1,7 +1,5 @@
 ﻿using GoogleMobileAds.Api;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,7 +16,6 @@ public class GoogleAdsManager : MonoBehaviour
         MobileAds.Initialize(initStatus => { });
         RequestInterstitial();
     }
-
 
     private void RequestInterstitial()
     {
