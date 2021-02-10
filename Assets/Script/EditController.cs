@@ -167,13 +167,11 @@ public class EditController : MonoBehaviour
 
     public void GoalOK()
     {
-        stageCon.stageFaze = stageController.StageFaze.IDLE;
         goalInfo.SetActive(false);
     }
 
     public void OnGoal()
     {
-        stageCon.stageFaze = stageController.StageFaze.GOAL;
         goalText.text = "移動回数" + moveCountText.text + "回でクリア！！";
         goalInfo.SetActive(true);
     }
