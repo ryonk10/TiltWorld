@@ -55,7 +55,6 @@ public class EditController : MonoBehaviour
                 OpenLoadForm.SetActive(false);
                 OpenSaveForm.SetActive(false);
             }
-            
         }
         else
         {
@@ -69,12 +68,12 @@ public class EditController : MonoBehaviour
         var editBlock = GameObject.FindGameObjectsWithTag("EditBlock");
         if (editBlock.Length == 0)
         {
-            ErraShow("バグるとでも思ったか！！");
+            ErraShow("ブロックを配置してください。");
             return;
         }
         if (!IsCharaOnBlock())
         {
-            ErraShow("なめとんのか！！！");
+            ErraShow("キャラを配置してください。");
             return;
         }
 
@@ -204,6 +203,7 @@ public class EditController : MonoBehaviour
         }
         saveDataClass = null;
     }
+
     public void ReleseLoad()
     {
         saveDataClass = null;
@@ -214,7 +214,175 @@ public class EditController : MonoBehaviour
         saveDataClass = new SaveDataClass();
         if (!File.Exists(Application.persistentDataPath + "/save.json"))
         {
+            var blockTransform = new BlockTransform[11]
+            {
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(0,0,0),
+                    blockRotation=Vector3.zero,
+                    blockType="L"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(1,0,0),
+                    blockRotation=Vector3.zero,
+                    blockType="F"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(3,0,0),
+                    blockRotation=Vector3.zero,
+                    blockType="F"
+                },
+                 new BlockTransform
+                {
+                    blockPosition=new Vector3(0,0,1),
+                    blockRotation=Vector3.zero,
+                    blockType="Obs"
+                },
+                  new BlockTransform
+                {
+                    blockPosition=new Vector3(1,0,1),
+                    blockRotation=Vector3.zero,
+                    blockType="H"
+                },
+                   new BlockTransform
+                {
+                    blockPosition=new Vector3(2,0,1),
+                    blockRotation=Vector3.zero,
+                    blockType="Obs"
+                },
+                    new BlockTransform
+                {
+                    blockPosition=new Vector3(0,0,2),
+                    blockRotation=Vector3.zero,
+                    blockType="F"
+                },
+                 new BlockTransform
+                {
+                    blockPosition=new Vector3(2,0,2),
+                    blockRotation=Vector3.zero,
+                    blockType="F"
+                },
+                  new BlockTransform
+                {
+                    blockPosition=new Vector3(0,0,3),
+                    blockRotation=Vector3.zero,
+                    blockType="F"
+                },
+                   new BlockTransform
+                {
+                    blockPosition=new Vector3(2,0,3),
+                    blockRotation=Vector3.zero,
+                    blockType="F"
+                },
+                    new BlockTransform
+                {
+                    blockPosition=new Vector3(3,0,3),
+                    blockRotation=new Vector3(0,90,0),
+                    blockType="H"
+                },
+            };
             var stagePlacement = new StagePlacement[6];
+            stagePlacement[0] = new StagePlacement
+            {
+                blockTransform = blockTransform,
+                charaPosition = new Vector3(3, 0.75f, 3),
+                goalPosiotion = new Vector3(0, 0, 3)
+            };
+            blockTransform = new BlockTransform[14]
+            {
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(0,0,0),
+                    blockRotation=new Vector3(0,90,0),
+                    blockType="L"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(1,0,0),
+                    blockRotation=Vector3.zero,
+                    blockType="H"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(2,0,0),
+                    blockRotation=Vector3.zero,
+                    blockType="H"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(3,0,0),
+                    blockRotation=Vector3.zero,
+                    blockType="L"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(0,0,1),
+                    blockRotation=new Vector3(0,90,0),
+                    blockType="H"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(2,0,1),
+                    blockRotation=Vector3.zero,
+                    blockType="F"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(3,0,1),
+                    blockRotation=new Vector3(0,90,0),
+                    blockType="H"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(0,0,2),
+                    blockRotation=new Vector3(0,90,0),
+                    blockType="H"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(1,0,2),
+                    blockRotation=Vector3.zero,
+                    blockType="F"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(3,0,2),
+                    blockRotation=new Vector3(0,90,0),
+                    blockType="H"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(0,0,3),
+                    blockRotation=new Vector3(0,180,0),
+                    blockType="L"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(1,0,3),
+                    blockRotation=Vector3.zero,
+                    blockType="H"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(2,0,3),
+                    blockRotation=Vector3.zero,
+                    blockType="H"
+                },
+                new BlockTransform
+                {
+                    blockPosition=new Vector3(3,0,3),
+                    blockRotation=new Vector3(0,-90,0),
+                    blockType="L"
+                }
+            };
+            stagePlacement[1] = new StagePlacement
+            {
+                blockTransform = blockTransform,
+                charaPosition = new Vector3(0, 0.75f, 0),
+                goalPosiotion = new Vector3(2, 0, 3)
+            };
             saveDataClass.saveData = stagePlacement;
             return;
         }
@@ -236,7 +404,11 @@ public class EditController : MonoBehaviour
             Destroy(block);
         }
         var stagePlacement = saveDataClass.saveData[number];
-        for(var index = 0; index < stagePlacement.blockTransform.Length; index++)
+        if (stagePlacement == null)
+        {
+            return;
+        }
+        for (var index = 0; index < stagePlacement.blockTransform.Length; index++)
         {
             GameObject tempBlock;
             if (stagePlacement.blockTransform[index].blockType.Contains("H"))
@@ -249,19 +421,19 @@ public class EditController : MonoBehaviour
                 tempBlock = baseBlocks[3];
             else
                 tempBlock = baseBlocks[4];
-            var block = Instantiate(tempBlock,parent);
+            var block = Instantiate(tempBlock, parent);
             block.transform.localPosition = stagePlacement.blockTransform[index].blockPosition;
             block.transform.localEulerAngles = stagePlacement.blockTransform[index].blockRotation;
             block.transform.localScale = new Vector3(1, 1, 1);
             block.tag = "EditBlock";
         }
-        if (stagePlacement.charaPosition !=Vector3.zero&&stagePlacement.charaPosition!=editCharaPosi)
+        if (stagePlacement.charaPosition != Vector3.zero && stagePlacement.charaPosition != editCharaPosi)
         {
             chara.transform.parent = parent;
             chara.transform.localPosition = stagePlacement.charaPosition;
             chara.transform.localScale = new Vector3(0.002f, 0.002f, 0.002f);
         }
-        if (stagePlacement.goalPosiotion != Vector3.zero&&stagePlacement.goalPosiotion!=editGoalPosi)
+        if (stagePlacement.goalPosiotion != Vector3.zero && stagePlacement.goalPosiotion != editGoalPosi)
         {
             parent = GameObject.FindGameObjectWithTag("PositionGoal").transform.parent;
             goal.transform.parent = parent;
@@ -274,6 +446,7 @@ public class EditController : MonoBehaviour
     {
         saveNumber = number;
     }
+
     [Serializable]
     public class BlockTransform
     {
@@ -288,7 +461,6 @@ public class EditController : MonoBehaviour
         public BlockTransform[] blockTransform;
         public Vector3 charaPosition;
         public Vector3 goalPosiotion;
-
     }
 
     [Serializable]
