@@ -35,7 +35,7 @@ public class CharaController : MonoBehaviour
         }
         else if (stageCon.stageFaze == stageController.StageFaze.GOAL)
         {
-            float step = 8 * Time.deltaTime;
+            float step = 3 * Time.deltaTime;
             this.rigi.velocity = new Vector3(1, 0, 5) * step;
         }
     }
