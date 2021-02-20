@@ -6,11 +6,11 @@ public class ButtonController : MonoBehaviour
     public Button up, down, left, right, reSet, reTrun;
     public Text MoveCountText;
 
-    private stageController stageCon;
+    private StageController stageController;
 
     private void Start()
     {
-        stageCon = GameObject.FindGameObjectWithTag("Stage").GetComponent<stageController>();
+        stageController = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageController>();
     }
 
     // Start is called before the first frame update
@@ -24,7 +24,7 @@ public class ButtonController : MonoBehaviour
         left.interactable = false;
         reSet.interactable = false;
         reTrun.interactable = false;
-        stageCon.StageTilt(direction);
+        stageController.StageTilt(direction);
     }
 
     public void ChangeInteractableToTrue()
@@ -44,7 +44,7 @@ public class ButtonController : MonoBehaviour
     public void GameReset()
     {
         MoveCountText.text = "0";
-        stageCon.GameReset();
+        stageController.GameReset();
     }
 
     public void GameReturn()
@@ -55,6 +55,6 @@ public class ButtonController : MonoBehaviour
             moveCount = 0;
         }
         MoveCountText.text = moveCount.ToString();
-        stageCon.GameRetrun();
+        stageController.GameRetrun();
     }
 }

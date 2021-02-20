@@ -1,13 +1,14 @@
-﻿using UnityEngine;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+using UnityEngine;
+
 public class EnterBlock : MonoBehaviour
 {
-    private stageController stageCon;
+    private StageController stageController;
     // Start is called before the first frame update
 
     private void Start()
     {
-        stageCon = GameObject.FindGameObjectWithTag("Stage").GetComponent<stageController>();
+        stageController = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageController>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -17,7 +18,7 @@ public class EnterBlock : MonoBehaviour
             var numberStr = Regex.Match(this.name, @"^(\d+)");
             if (numberStr.Success)
             {
-                stageCon.charaEnterBlock = int.Parse(numberStr.Value);
+                stageController.charaEnterBlock = int.Parse(numberStr.Value);
             }
         }
     }
@@ -29,7 +30,7 @@ public class EnterBlock : MonoBehaviour
             var numberStr = Regex.Match(this.name, @"^(\d+)");
             if (numberStr.Success)
             {
-                stageCon.charaExitBlock = int.Parse(numberStr.Value);
+                stageController.charaExitBlock = int.Parse(numberStr.Value);
             }
         }
     }

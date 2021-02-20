@@ -19,7 +19,7 @@ public class TutorialEvent : MonoBehaviour
     public GameObject block;
     public GameObject informationPanel;
     public GameObject gameInfo;
-    public stageController stageCon;
+    public StageController stageController;
     public Rigidbody charaRigit;
 
     private int direction;
@@ -61,17 +61,17 @@ public class TutorialEvent : MonoBehaviour
         right.interactable = true;
         tutorialSupportImage.SetActive(true);
         informationSupportImage.SetActive(false);
-        yield return new WaitUntil(() => (0 < stageCon.direction));
-        this.direction = stageCon.direction;
+        yield return new WaitUntil(() => (0 < stageController.direction));
+        this.direction = stageController.direction;
         tutorialSupportImage.SetActive(false);
         yield return new WaitForSeconds(2f);
         textInformation.text = "世界を傾けると、地面が移動し、\nキャラクターは世界の壁\nもしくは物にぶつかるまで\n滑ってしまいます。";
-        stageCon.direction = 0;
+        stageController.direction = 0;
         informationSupportImage.SetActive(true);
         buttonflag = true;
         charaRigit.isKinematic = true;
         yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
-        stageCon.direction = this.direction;
+        stageController.direction = this.direction;
         charaRigit.isKinematic = false;
         yield return null;
         textInformation.text = "また、時に間違ってしまい\nやり直したいことも\nあるでしょう。";

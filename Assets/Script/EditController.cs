@@ -24,7 +24,7 @@ public class EditController : MonoBehaviour
     public Vector3 editGoalPosi { get; set; }
     public Vector3 editGoalScale { get; set; }
 
-    private stageController stageCon;
+    private StageController stageController;
     private int saveNumber;
     private SaveDataClass saveDataClass;
 
@@ -34,14 +34,14 @@ public class EditController : MonoBehaviour
         editCharaScale = chara.transform.localScale;
         editGoalPosi = goal.transform.position;
         editGoalScale = goal.transform.localScale;
-        stageCon = GameObject.FindGameObjectWithTag("Stage").GetComponent<stageController>();
+        stageController = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageController>();
     }
 
     private void Update()
     {
-        if (stageCon.stageFaze == stageController.StageFaze.IDLE)
+        if (stageController.stageFaze == StageController.StageFaze.IDLE)
         {
-            if (stageCon.isEditMode)
+            if (stageController.isEditMode)
             {
                 playButton.interactable = true;
                 editButton.interactable = false;
@@ -104,8 +104,8 @@ public class EditController : MonoBehaviour
         playButton.interactable = false;
         editButton.interactable = true;
         moveCountText.text = "0";
-        stageCon.isEditMode = false;
-        stageCon.StageInitialize();
+        stageController.isEditMode = false;
+        stageController.StageInitialize();
     }
 
     public void ReStartEditMode()
@@ -136,7 +136,7 @@ public class EditController : MonoBehaviour
             block.tag = "EditBlock";
         }
         GameObject.FindGameObjectWithTag("Stage").GetComponent<Animator>().SetTrigger("SetIdle");
-        stageCon.isEditMode = true;
+        stageController.isEditMode = true;
     }
 
     private bool IsCharaOnBlock()

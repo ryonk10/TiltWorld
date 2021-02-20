@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class stageController : MonoBehaviour
+public class StageController : MonoBehaviour
 {
     public List<ReturnGameClass> returnGameClass;
     public float speed;

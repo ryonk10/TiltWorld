@@ -6,7 +6,7 @@ public class CharaController : MonoBehaviour
     public Vector3 charaExitBlockPosition { get; set; }
 
     private ButtonController buttonController;
-    private stageController stageCon;
+    private StageController stageController;
     private Vector3 charaDefaltPosition;
     private Rigidbody rigi;
 
@@ -14,14 +14,14 @@ public class CharaController : MonoBehaviour
     private void Start()
     {
         buttonController = GameObject.FindGameObjectWithTag("ButtonController").GetComponent<ButtonController>();
-        stageCon = GameObject.FindGameObjectWithTag("Stage").GetComponent<stageController>();
+        stageController = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageController>();
         rigi = this.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (stageCon.stageFaze == stageController.StageFaze.CHARA_MOVE_DEFAULT)
+        if (stageController.stageFaze == StageController.StageFaze.CHARA_MOVE_DEFAULT)
         {
             float step = walkSpeed * Time.deltaTime;
             charaDefaltPosition = new Vector3(charaExitBlockPosition.x, this.transform.localPosition.y, charaExitBlockPosition.z);
@@ -29,11 +29,11 @@ public class CharaController : MonoBehaviour
             if ((charaDefaltPosition.x == this.transform.localPosition.x)
                 && (charaDefaltPosition.z == this.transform.localPosition.z))
             {
-                stageCon.stageFaze = stageController.StageFaze.IDLE;
+                stageController.stageFaze = StageController.StageFaze.IDLE;
                 buttonController.ChangeInteractableToTrue();
             }
         }
-        else if (stageCon.stageFaze == stageController.StageFaze.GOAL)
+        else if (stageController.stageFaze == StageController.StageFaze.GOAL)
         {
             float step = 3 * Time.deltaTime;
             this.rigi.velocity = new Vector3(1, 0, 5) * step;
