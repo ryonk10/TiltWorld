@@ -15,7 +15,7 @@ public class EndEvet : MonoBehaviour
 
     public void OnGoal()
     {
-        GameObject.FindGameObjectWithTag("Stage").GetComponent<StageController>().stageFaze = StageController.StageFaze.GOAL;
+        Stage.stagePhase = StagePhase.GOAL;
         Camera.main.enabled = false;
         subCamera.enabled = true;
         text.SetActive(true);

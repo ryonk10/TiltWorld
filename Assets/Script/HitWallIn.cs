@@ -2,20 +2,20 @@
 
 public class HitWallIn : MonoBehaviour
 {
-    private StageController stageController;
+    private Stage stage;
 
     // Start is called before the first frame update
     private void Start()
     {
-        stageController = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageController>();
+        stage = GameObject.FindGameObjectWithTag("Stage").GetComponent<Stage>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Chara"))
         {
-            stageController.isCharaHitToIn = true;
-            stageController.charahitToWall = true;
+            stage.isCharaHitToIn = true;
+            stage.charahitToWall = true;
             if (this.gameObject.tag != "wall")
             {
                 var rig = collision.gameObject.GetComponent<Rigidbody>();

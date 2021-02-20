@@ -39,9 +39,9 @@ public class EditController : MonoBehaviour
 
     private void Update()
     {
-        if (stageController.stageFaze == StageController.StageFaze.IDLE)
+        if (Stage.stagePhase == StagePhase.IDLE)
         {
-            if (stageController.isEditMode)
+            if (stageController.GetIsEditMode())
             {
                 playButton.interactable = true;
                 editButton.interactable = false;
@@ -104,8 +104,8 @@ public class EditController : MonoBehaviour
         playButton.interactable = false;
         editButton.interactable = true;
         moveCountText.text = "0";
-        stageController.isEditMode = false;
-        stageController.StageInitialize();
+        stageController.SetIsEditMode(false);
+        Stage.stagePhase = StagePhase.INITIALIZE;
     }
 
     public void ReStartEditMode()
@@ -136,7 +136,7 @@ public class EditController : MonoBehaviour
             block.tag = "EditBlock";
         }
         GameObject.FindGameObjectWithTag("Stage").GetComponent<Animator>().SetTrigger("SetIdle");
-        stageController.isEditMode = true;
+        stageController.SetIsEditMode(true);
     }
 
     private bool IsCharaOnBlock()
