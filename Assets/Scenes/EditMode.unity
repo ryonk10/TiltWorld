@@ -2842,6 +2842,7 @@ GameObject:
   m_Component:
   - component: {fileID: 757842146}
   - component: {fileID: 757842148}
+  - component: {fileID: 757842147}
   m_Layer: 0
   m_Name: GoalCollider
   m_TagString: Untagged
@@ -2863,6 +2864,32 @@ Transform:
   m_Father: {fileID: 1378339937}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &757842147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757842145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d38e0e64f4979bc44a806b4573085007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnGoal:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 705832347}
+        m_MethodName: ShowEndForm
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &757842148
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3430,7 +3457,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+  m_Color: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -5046,6 +5073,81 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 267194910802037885, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 267194911157810200, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 267194911159608380, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 267194911159608381, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -95
+      objectReference: {fileID: 0}
+    - target: {fileID: 267194911589540097, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 291.99194
+      objectReference: {fileID: 0}
+    - target: {fileID: 267194911589540097, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -44
+      objectReference: {fileID: 0}
+    - target: {fileID: 267194911822194752, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 267194911822194766, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 267194911822194766, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 267194911822194766, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 705832347}
+    - target: {fileID: 267194911822194766, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CLoseEndForm
+      objectReference: {fileID: 0}
+    - target: {fileID: 267194911822194767, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 267194911822194767, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 267194911822194767, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -148
+      objectReference: {fileID: 0}
+    - target: {fileID: 267194912163492016, guid: 4e11860436e3e194083acec6ca774dba,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1219492045645986017, guid: 4e11860436e3e194083acec6ca774dba,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
