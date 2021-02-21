@@ -12,10 +12,13 @@ public class GameSceneManager : MonoBehaviour
         scene.allowSceneActivation = false;
     }
 
-    public void NextSceneStart()
+    public void NextSceneStart(string secneName)
     {
-        if (scene != null)
+        if (scene == null)
+        {
+            SceneManager.LoadScene(secneName);
+        }
+        else
             scene.allowSceneActivation = true;
     }
-
 }

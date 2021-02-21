@@ -2,59 +2,36 @@
 
 public class CharaController : MonoBehaviour
 {
-    public float walkSpeed;
-    public Vector3 charaExitBlockPosition { get; set; }
+    public CharaModel charaModel;
 
-    private ButtonController buttonController;
-    private StageController stageController;
-    private Vector3 charaDefaltPosition;
-    private Rigidbody rigi;
-
-    // Start is called before the first frame update
-    private void Start()
+    public void CharaInitialize()
     {
-        buttonController = GameObject.FindGameObjectWithTag("ButtonController").GetComponent<ButtonController>();
-        stageController = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageController>();
-        rigi = this.GetComponent<Rigidbody>();
+        charaModel.CharaInitialize();
+    }
+    public void CharaMoveDefaultPosition()
+    {
+        StartCoroutine(charaModel.MoveDefaulPosition());
+    }
+    public void CharaOnGoal()
+    {
+        StartCoroutine(charaModel.GoalMove());
     }
 
-    // Update is called once per frame
-    private void Update()
+    public void ChangeParent(Transform parent)
     {
-        if (stageController.stageFaze == StageController.StageFaze.CHARA_MOVE_DEFAULT)
-        {
-            float step = walkSpeed * Time.deltaTime;
-            charaDefaltPosition = new Vector3(charaExitBlockPosition.x, this.transform.localPosition.y, charaExitBlockPosition.z);
-            this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, charaDefaltPosition, step);
-            if ((charaDefaltPosition.x == this.transform.localPosition.x)
-                && (charaDefaltPosition.z == this.transform.localPosition.z))
-            {
-                stageController.stageFaze = StageController.StageFaze.IDLE;
-                buttonController.ChangeInteractableToTrue();
-            }
-        }
-        else if (stageController.stageFaze == StageController.StageFaze.GOAL)
-        {
-            float step = 3 * Time.deltaTime;
-            this.rigi.velocity = new Vector3(1, 0, 5) * step;
-        }
+        charaModel.transform.parent = parent;
     }
 
-    public Vector3 GetReturnCharaPosition()
+    public Vector3 GetCharaPosition()
     {
-        return this.transform.localPosition;
+        return charaModel.transform.localPosition;
     }
-
-    public void ReturnCharaPosition(Vector3 charaPosi)
+    public void SetCharaExitBlockPosition(Vector3 position)
     {
-        var block = GameObject.FindGameObjectWithTag("block");
-        this.transform.parent = block.transform.parent;
-        this.rigi.drag = 1;
-        this.transform.localPosition = charaPosi;
+        charaModel.charaExitBlockPosition = position;
     }
-
-    public void MoveParentToBlock(GameObject target)
+    public void ReturnCharaPosition(Vector3 charaPosition)
     {
-        this.transform.parent = target.transform.parent;
+        charaModel.ReturnCharaPosition(charaPosition);
     }
 }

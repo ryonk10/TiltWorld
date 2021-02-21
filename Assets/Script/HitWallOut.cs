@@ -2,20 +2,18 @@
 
 public class HitWallOut : MonoBehaviour
 {
-    private StageController stageController;
-
-    // Start is called before the first frame update
+    private Stage stage;
     private void Start()
     {
-        stageController = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageController>();
+        stage = GameObject.FindGameObjectWithTag("Stage").GetComponent<Stage>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Chara"))
         {
-            stageController.isCharaHitToIn = false;
-            stageController.charahitToWall = true;
+            stage.isCharaHitToIn = false;
+            stage.charahitToWall = true;
         }
     }
 }
