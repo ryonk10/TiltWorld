@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class EditController : MonoBehaviour
 {
-    public GameObject canvas;
-    public GameObject errainfo;
-    public GameObject goalInfo;
-    public GameObject OpenLoadForm;
-    public GameObject OpenSaveForm;
+    public Stage stage;
+    public GameInfoController gameInfoController;
+    public GameObject canvasGameControll;
+    public GameObject editPanel;
+    public GameObject erroInfoPanel;
     public GameObject chara;
     public GameObject goal;
     public GameObject[] baseBlocks;
@@ -17,14 +17,11 @@ public class EditController : MonoBehaviour
     public Button editButton;
     public Button ok;
     public Text erraText;
-    public Text goalText;
-    public Text moveCountText;
     public Vector3 editCharaPosi { get; set; }
     public Vector3 editCharaScale { get; set; }
     public Vector3 editGoalPosi { get; set; }
     public Vector3 editGoalScale { get; set; }
 
-    private StageController stageController;
     private int saveNumber;
     private SaveDataClass saveDataClass;
 
@@ -34,32 +31,30 @@ public class EditController : MonoBehaviour
         editCharaScale = chara.transform.localScale;
         editGoalPosi = goal.transform.position;
         editGoalScale = goal.transform.localScale;
-        stageController = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageController>();
     }
 
     private void Update()
     {
         if (Stage.stagePhase == StagePhase.IDLE)
         {
-            if (stageController.GetIsEditMode())
+            if (stage.isEditMode)
             {
                 playButton.interactable = true;
                 editButton.interactable = false;
-                OpenLoadForm.SetActive(true);
-                OpenSaveForm.SetActive(true);
             }
             else
             {
                 playButton.interactable = false;
                 editButton.interactable = true;
-                OpenLoadForm.SetActive(false);
-                OpenSaveForm.SetActive(false);
             }
         }
         else
         {
-            playButton.interactable = false;
-            editButton.interactable = false;
+            if (!stage.isEditMode)
+            {
+                playButton.interactable = false;
+                editButton.interactable = false;
+            }
         }
     }
 
@@ -68,12 +63,12 @@ public class EditController : MonoBehaviour
         var editBlock = GameObject.FindGameObjectsWithTag("EditBlock");
         if (editBlock.Length == 0)
         {
-            ErraShow("ブロックを配置してください。");
+            ShowErrorInfoPanel("ブロックを配置してください。");
             return;
         }
         if (!IsCharaOnBlock())
         {
-            ErraShow("キャラを配置してください。");
+            ShowErrorInfoPanel("キャラを配置してください。");
             return;
         }
 
@@ -100,11 +95,12 @@ public class EditController : MonoBehaviour
         Destroy(chara.GetComponent<EditChara>());
         chara.tag = "Chara";
         Destroy(goal.GetComponent<EditGoal>());
-        canvas.SetActive(true);
+        canvasGameControll.SetActive(true);
         playButton.interactable = false;
         editButton.interactable = true;
-        moveCountText.text = "0";
-        stageController.SetIsEditMode(false);
+        editPanel.SetActive(false);
+        gameInfoController.ResetMoveCount();
+        stage.isEditMode = false;
         Stage.stagePhase = StagePhase.INITIALIZE;
     }
 
@@ -113,17 +109,12 @@ public class EditController : MonoBehaviour
         playButton.interactable = true;
         editButton.interactable = false;
         goal.SetActive(true);
-        canvas.SetActive(false);
+        canvasGameControll.SetActive(false);
         chara.GetComponent<Rigidbody>().useGravity = false;
         chara.AddComponent<EditChara>();
-        chara.transform.parent = null;
-        chara.transform.position = editCharaPosi;
-        chara.transform.localScale = editCharaScale;
         chara.tag = "EditChara";
         goal.AddComponent<EditGoal>();
-        goal.transform.parent = null;
-        goal.transform.position = editGoalPosi;
-        goal.transform.localScale = editGoalScale;
+        InitializeChara_Goal();
         foreach (var block in baseBlocks)
         {
             block.SetActive(true);
@@ -135,8 +126,20 @@ public class EditController : MonoBehaviour
             block.GetComponent<EnterBlock>().enabled = false;
             block.tag = "EditBlock";
         }
-        GameObject.FindGameObjectWithTag("Stage").GetComponent<Animator>().SetTrigger("SetIdle");
-        stageController.SetIsEditMode(true);
+        stage.StopStageMoveAnim();
+        editPanel.SetActive(true);
+        stage.isEditMode = true;
+        Stage.stagePhase = StagePhase.INITIALIZE;
+    }
+
+    private void InitializeChara_Goal()
+    {
+        chara.transform.parent = null;
+        chara.transform.position = editCharaPosi;
+        chara.transform.localScale = editCharaScale;
+        goal.transform.parent = null;
+        goal.transform.position = editGoalPosi;
+        goal.transform.localScale = editGoalScale;
     }
 
     private bool IsCharaOnBlock()
@@ -152,27 +155,30 @@ public class EditController : MonoBehaviour
         return false;
     }
 
-    public void ErraShow(string messe)
+    public void ShowErrorInfoPanel(string text)
     {
         playButton.image.color = playButton.colors.normalColor;
-        erraText.text = messe;
-        errainfo.SetActive(true);
+        erraText.text = text;
+        erroInfoPanel.SetActive(true);
     }
 
-    public void ErraSorry()
+    public void CloseErrorInfoPanel()
     {
-        errainfo.SetActive(false);
+        erroInfoPanel.SetActive(false);
     }
 
-    public void GoalOK()
+    public void ResetEdit()
     {
-        goalInfo.SetActive(false);
-    }
-
-    public void OnGoal()
-    {
-        goalText.text = "移動回数" + moveCountText.text + "回でクリア！！";
-        goalInfo.SetActive(true);
+        if (saveDataClass != null)
+        {
+            saveDataClass = null;
+        }
+        var blocks = GameObject.FindGameObjectsWithTag("EditBlock");
+        foreach (var block in blocks)
+        {
+            Destroy(block);
+        }
+        InitializeChara_Goal();
     }
 
     public void Save()
@@ -201,11 +207,6 @@ public class EditController : MonoBehaviour
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(jsonString);
             file.Write(bytes, 0, bytes.Length);
         }
-        saveDataClass = null;
-    }
-
-    public void ReleseLoad()
-    {
         saveDataClass = null;
     }
 
@@ -395,6 +396,11 @@ public class EditController : MonoBehaviour
         }
     }
 
+    public void ReleaseSaveDataClass()
+    {
+        saveDataClass = null;
+    }
+
     public void SetLoadPlacement(int number)
     {
         var blocks = GameObject.FindGameObjectsWithTag("EditBlock");
@@ -442,7 +448,7 @@ public class EditController : MonoBehaviour
         }
     }
 
-    public void SelsectSave(int number)
+    public void SetSaveNumber(int number)
     {
         saveNumber = number;
     }

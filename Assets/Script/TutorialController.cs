@@ -85,6 +85,7 @@ public class TutorialController: MonoBehaviour
         tutorialSupportImage1.SetActive(false);
         informationSupportImage.SetActive(true);
         resetButton.interactable = false;
+        resetflag = true;
         textInformation.text = "これで最初の位置に\n戻りましたね。";
         yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
         yield return null;

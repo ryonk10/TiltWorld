@@ -36,12 +36,6 @@ public class Stage : MonoBehaviour
 
     public void StageInitialize()
     {
-        if (isEditMode)
-        {
-            CreatePositonBlock();
-            CreatePositionGloal();
-            return;
-        }
         SetParameter_Idle();
         stageMoveAnimator.SetTrigger("SetMove");
         returnGameClass = new List<ReturnGameClass>();
@@ -79,7 +73,6 @@ public class Stage : MonoBehaviour
                 isBlockExit[index / horizonSize, index % horizonSize] = index;
             }
         }
-        stagePhase = StagePhase.IDLE;
     }
 
     public void StageTilt()
@@ -238,6 +231,10 @@ public class Stage : MonoBehaviour
         float step = speed * Time.deltaTime;
         while (!(DoseStop() && charahitToWall))
         {
+            if (stagePhase != StagePhase.BLOCK_SLIDING)
+            {
+                yield break;
+            }
             for (var index = 0; index < verticalSize * horizonSize; index++)
             {
                 if (gameBlockPosition[index] != null)
@@ -255,7 +252,7 @@ public class Stage : MonoBehaviour
     {
         stagePhase = StagePhase.STAGE_RETURNING;
         charahitToWall = false;
-        if (tiltDirection==1||tiltDirection==3)
+        if (tiltDirection == 1 || tiltDirection == 3)
         {
             iTween.RotateTo(
                 this.gameObject,
@@ -263,7 +260,7 @@ public class Stage : MonoBehaviour
                 );
             return;
         }
-        else if(tiltDirection==2||tiltDirection==4)
+        else if (tiltDirection == 2 || tiltDirection == 4)
         {
             iTween.RotateTo(
                 this.gameObject,
@@ -348,6 +345,10 @@ public class Stage : MonoBehaviour
             GameBack(lastIndex);
             returnGameClass.RemoveAt(lastIndex);
         }
+        else
+        {
+            GameReset();
+        }
     }
 
     private void GameBack(int backIndex)
@@ -378,6 +379,11 @@ public class Stage : MonoBehaviour
         {
             return gameBlockPosition[charaExitBlock].transform.localPosition;
         }
+    }
+
+    public void StopStageMoveAnim()
+    {
+        stageMoveAnimator.SetTrigger("SetIdle");
     }
 
     private bool DoseStop()

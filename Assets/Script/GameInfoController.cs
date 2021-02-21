@@ -5,33 +5,45 @@ using UnityEngine.UI;
 
 public class GameInfoController : MonoBehaviour
 {
-    public GameObject EndForm;
-    public Text MoveCountText;
+    public GameObject endForm;
+    public Text textEndInfo;
+    public Text textClearMoveCount;
+    public Text textUserInfo;
+    public Text moveCountText;
 
     public void UpMoveCount()
     {
-        var moveCount = int.Parse(MoveCountText.text) + 1;
-        MoveCountText.text = moveCount.ToString();
+        var moveCount = int.Parse(moveCountText.text) + 1;
+        moveCountText.text = moveCount.ToString();
     }
     public void DownMoveCount()
     {
-        var moveCount = int.Parse(MoveCountText.text) - 1;
+        var moveCount = int.Parse(moveCountText.text) - 1;
         if (moveCount < 0)
         {
             moveCount = 0;
         }
-        MoveCountText.text = moveCount.ToString();
+        moveCountText.text = moveCount.ToString();
     }
     public void ResetMoveCount()
     {
-        MoveCountText.text = "0";
+        moveCountText.text = "0";
+    }
+    public void SetTextEndIfo(string text)
+    {
+        textEndInfo.text = text;
+    }
+    public void SetTextUserInfo(string text)
+    {
+        textUserInfo.text = text;
     }
     public void ShowEndForm()
     {
-        EndForm.SetActive(true);
+        textClearMoveCount.text = moveCountText.text + "回でクリア！！";
+        endForm.SetActive(true);
     }
     public void CLoseEndForm()
     {
-        EndForm.SetActive(false);
+        endForm.SetActive(false);
     }
 }

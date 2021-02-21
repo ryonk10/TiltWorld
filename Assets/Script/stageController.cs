@@ -5,6 +5,7 @@ public class StageController : MonoBehaviour
     public Stage stage;
     public ButtonController buttonController;
     public CharaController charaController;
+    public GameInfoController gameInfoController;
     private void Update()
     {
         switch (Stage.stagePhase)
@@ -12,22 +13,14 @@ public class StageController : MonoBehaviour
             case StagePhase.INITIALIZE:
                 StageInitializPhase();
                 break;
-            case StagePhase.IDLE:
-                break;
             case StagePhase.STAGE_TILT:
                 StageTiltPhase();
-                break;
-            case StagePhase.STAGE_TILTING:
                 break;
             case StagePhase.BLOCK_SLIDE:
                 SlidBlockPhase();
                 break;
-            case StagePhase.BLOCK_SLIDING:
-                break;
             case StagePhase.STAGE_RETURN:
                 StageRetrunPhase();
-                break;
-            case StagePhase.STAGE_RETURNING:
                 break;
             case StagePhase.CHARA_MOVE_DEFAULT:
                 CharaMoveDefaultPhase();
@@ -46,8 +39,17 @@ public class StageController : MonoBehaviour
 
     public void StageInitializPhase()
     {
-        stage.StageInitialize();
-        charaController.CharaInitialize();
+        if (stage.isEditMode)
+        {
+            stage.CreatePositonBlock();
+            stage.CreatePositionGloal();
+        }
+        else
+        {
+            stage.StageInitialize();
+            charaController.CharaInitialize();
+        }
+        Stage.stagePhase = StagePhase.IDLE;
     }
 
     public void StageTiltPhase()
@@ -83,6 +85,8 @@ public class StageController : MonoBehaviour
     }
     public void SetTiltDirection(int tiltDirection)
     {
+        buttonController.ButtonToFalse();
+        gameInfoController.UpMoveCount();
         stage.tiltDirection = tiltDirection;
         Stage.stagePhase = StagePhase.STAGE_TILT;
     }
@@ -90,12 +94,14 @@ public class StageController : MonoBehaviour
     public void GameReset()
     {
         charaController.SetCharaExitBlockPosition(Vector3.zero);
-        buttonController.MoveButtonToTrue();
+        gameInfoController.ResetMoveCount();
+        buttonController.ButtonToTure();
         stage.GameReset();
     }
     public void GameRetrun()
     {
-        buttonController.MoveButtonToTrue();
+        buttonController.ButtonToTure();
+        gameInfoController.DownMoveCount();
         stage.GameRetrun();
     }
     public void ReturnCharaPosition(Vector3 position)
@@ -110,9 +116,5 @@ public class StageController : MonoBehaviour
     public bool GetIsEditMode()
     {
         return stage.isEditMode;
-    }
-    public void SetIsEditMode(bool isEditMode)
-    {
-        stage.isEditMode = isEditMode;
     }
 }
